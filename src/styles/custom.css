@@ -1,0 +1,12 @@
+/* PopCharms - Clean minimal styles */
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+  background-color: #BBBBFF;
+  color: #190933;
+}
