@@ -1,0 +1,38 @@
+{
+  "version": "draft-personal-v1",
+  "language": "en",
+  "status": "draft — seller identity, fiscal treatment and legal review remain required",
+  "termsConsent": "I have read the terms of sale and understand that these are digital files for personal use.",
+  "digitalConsent": "I expressly request immediate delivery of the digital files and acknowledge that I lose my right of withdrawal once delivery begins. My rights for defective or non-conforming files remain.",
+  "license": "Buying a model permits personal use. Redistribution and commercial use require separate permission from the studio.",
+  "sections": [
+    {
+      "title": "The products",
+      "text": "This shop offers digital STL files. No physical item is shipped. Images illustrate the models; colour, material and final appearance depend on your print and finish."
+    },
+    {
+      "title": "Prices & payment",
+      "text": "Catalogue prices are in euros (EUR). The order amount is shown before payment. Payments are processed on the payment provider’s secure page; this site does not collect card numbers."
+    },
+    {
+      "title": "Access to files",
+      "text": "Downloads are available on your order page after payment verification. Private order access expires after 24 hours; individual download links expire after five minutes. You can request a new private access link by email. Back up your files and keep private links safe."
+    },
+    {
+      "title": "Personal use",
+      "text": "Buying a model permits personal use. Redistribution and commercial use require separate permission from the studio."
+    },
+    {
+      "title": "Immediate digital delivery",
+      "text": "I expressly request immediate delivery of the digital files and acknowledge that I lose my right of withdrawal once delivery begins. My rights for defective or non-conforming files remain."
+    },
+    {
+      "title": "Questions & support",
+      "text": "For a file or order issue, contact the studio using the contact form and include the relevant reference."
+    },
+    {
+      "title": "Your data",
+      "text": "Your cart is stored locally in your browser. The name, email and message submitted through the form are stored to handle your enquiry. Your name, email, order details, consent and download access records are stored to process orders and support access. Information needed for payment is sent to the payment provider. Use the contact form for enquiries about your data."
+    }
+  ]
+}

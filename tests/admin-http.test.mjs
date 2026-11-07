@@ -1,0 +1,103 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { createServer } from 'node:http';
+import { mkdtemp, readFile, rm, symlink } from 'node:fs/promises';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
+import { openStore } from '../server/store.mjs';
+import { createAdminHttp, setAdminAccount, validateStl } from '../server/admin-http.mjs';
+const origin = 'http://localhost:5173';
+const ascii = 'solid triangle\nfacet normal 0 0 1\nouter loop\nvertex 0 0 0\nvertex 1 0 0\nvertex 0 1 0\nendloop\nendfacet\nendsolid triangle\n';
+async function fixture(t, env = {}) {
+  const directory = await mkdtemp(join(tmpdir(), 'small-things-admin-http-'));
+  const store = openStore(directory, []);
+  if (!store.db.prepare("SELECT name FROM sqlite_master WHERE name='admin_accounts'").get()) store.db.exec(await readFile(new URL('../server/migrations/002-admin.sql', import.meta.url), 'utf8'));
+  const json = (res, status, data) => { res.writeHead(status, { 'Content-Type': 'application/json' }); res.end(JSON.stringify(data)); };
+  const body = async req => { const chunks = []; for await (const chunk of req) chunks.push(chunk); return JSON.parse(Buffer.concat(chunks).toString()); };
+  const admin = createAdminHttp({ store, env: { APP_ORIGIN: origin, ...env }, body, json, privateDir: join(directory, 'private') });
+  const server = createServer(async (req, res) => { try { const url = new URL(req.url, origin); if (!await admin.handle(req, res, url.pathname, url)) json(res, 404, {}); } catch (e) { json(res, e.status ?? 500, { error: e.status ? e.message : 'Unexpected error.' }); } });
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  t.after(async () => { server.closeAllConnections(); await new Promise(resolve => server.close(resolve)); store.close(); await rm(directory, { recursive: true, force: true }); });
+  const request = (path, options = {}) => fetch(`http://127.0.0.1:${server.address().port}/api/admin${path}`, options);
+  const login = async () => { const res = await request('/login', { method: 'POST', headers: { Origin: env.APP_ORIGIN ?? origin, 'Content-Type': 'application/json' }, body: JSON.stringify({ username: 'owner', password: 'correct horse battery staple' }) }); return { response: res, cookie: res.headers.get('set-cookie')?.split(';')[0], ...(await res.json()) }; };
+  return { store, directory, request, login };
+}
+test('no anonymous admin routes, no default account; origin required on login', async t => {
+  const { request } = await fixture(t);
+  for (const path of ['/session', '/products', '/orders', '/orders/secret', '/stats']) assert.equal((await request(path)).status, 401);
+  assert.equal((await request('/login', { method: 'POST' })).status, 403);
+  const res = await request('/login', { method: 'POST', headers: { Origin: origin, 'Content-Type': 'application/json' }, body: JSON.stringify({username:'owner',password:'not configured'}) });
+  assert.equal(res.status, 401); assert.equal((await res.json()).error, 'Invalid credentials.');
+});
+test('session cookies are opaque hashed, secure on HTTPS; CSRF, wrong origin, logout and expiry', async t => {
+  const { store, request, login } = await fixture(t, { APP_ORIGIN: 'https://shop.example.test' });
+  await setAdminAccount(store, 'owner', 'correct horse battery staple');
+  const auth = await login(); assert.equal(auth.response.status, 200);
+  const cookieHeader = auth.response.headers.get('set-cookie');
+  for (const flag of ['HttpOnly', 'SameSite=Strict', 'Secure', 'Path=/api/admin']) assert.ok(cookieHeader.includes(flag));
+  assert.equal(store.db.prepare('SELECT hash FROM admin_sessions').get().hash.length, 64);
+  assert.ok(!auth.cookie.includes(store.db.prepare('SELECT hash FROM admin_sessions').get().hash));
+  const session = await request('/session', { headers: { Cookie: auth.cookie } }); assert.equal((await session.json()).username, 'owner');
+  assert.equal((await request('/logout', { method:'POST', headers:{ Cookie:auth.cookie, Origin:'https://shop.example.test' } })).status, 403);
+  assert.equal((await request('/logout', { method:'POST', headers:{ Cookie:auth.cookie, Origin:'https://evil.test', 'X-CSRF-Token':auth.csrf } })).status, 403);
+  assert.equal((await request('/logout', { method:'POST', headers:{ Cookie:auth.cookie, Origin:'https://shop.example.test', 'X-CSRF-Token':auth.csrf } })).status, 200);
+  assert.equal((await request('/session', { headers:{Cookie:auth.cookie} })).status, 401);
+  const second = await login(); store.db.exec('UPDATE admin_sessions SET expires_at=1');
+  assert.equal((await request('/session', { headers:{Cookie:second.cookie} })).status, 401);
+});
+test('password reset revokes sessions and login rate limit is specific', async t => {
+  const { store, request, login } = await fixture(t);
+  await setAdminAccount(store, 'owner', 'correct horse battery staple');
+  const auth = await login();
+  await setAdminAccount(store, 'owner', 'replacement long secure password');
+  assert.equal((await request('/session', {headers:{Cookie:auth.cookie}})).status, 401);
+  for (let i=0;i<9;i++) assert.equal((await login()).response.status,401);
+  assert.equal((await login()).response.status,429);
+});
+test('authenticated CRUD, stats and STL upload; unauthorized upload is rejected before body', async t => {
+  const { store, directory, request, login } = await fixture(t);
+  await setAdminAccount(store, 'owner', 'correct horse battery staple');
+  assert.equal((await request('/files/model', {method:'POST',headers:{Origin:origin,'Content-Type':'application/octet-stream'},body:ascii})).status,401);
+  const auth = await login();
+  const headers={Cookie:auth.cookie,Origin:origin,'X-CSRF-Token':auth.csrf,'Content-Type':'application/octet-stream'};
+  assert.equal((await request('/files/model', {method:'POST',headers:{...headers,'X-CSRF-Token':'bad'},body:ascii})).status,403);
+  assert.equal((await request('/files/model', {method:'POST',headers,body:'not STL'})).status,400);
+  const upload=await request('/files/model',{method:'POST',headers,body:ascii}); assert.equal(upload.status,201);
+  const file=await upload.json(); assert.match(file.file,/^uploads\/[a-f0-9]{64}\.stl$/);
+  assert.equal(await readFile(join(directory,'private',file.file),'utf8'),ascii);
+  const product={id:'model',status:'published',name:'Model',category:'charm',description:'A model',details:'STL',image:'charmBunny',currency:'eur',priceCents:299,file:file.file};
+  assert.equal((await request('/products',{method:'POST',headers:{...headers,'Content-Type':'application/json'},body:JSON.stringify(product)})).status,200);
+  const list=await request('/products',{headers:{Cookie:auth.cookie}});assert.equal((await list.json()).products[0].id,'model');
+  assert.equal((await request('/orders',{headers:{Cookie:auth.cookie}})).status,200);
+  assert.equal((await request('/stats',{headers:{Cookie:auth.cookie}})).status,200);
+  // A pre-existing symlink must never redirect content-addressed upload writes.
+  await rm(join(directory,'private',file.file));
+  await symlink(import.meta.filename,join(directory,'private',file.file));
+  assert.equal((await request('/files/model',{method:'POST',headers,body:ascii})).status,400);
+});
+test('STL validation accepts binary/ascii syntax and rejects empty or nonfinite triangles', () => {
+  validateStl(Buffer.from(ascii));
+  const binary=Buffer.alloc(134);binary.writeUInt32LE(1,80);validateStl(binary);
+  binary.writeFloatLE(Infinity,84);assert.throws(()=>validateStl(binary),/coordinates/);
+  assert.throws(()=>validateStl(Buffer.from('solid empty\nendsolid empty')),/structure/);
+});
+test('upload guards reject unauthenticated bodies and oversized declared files before reading', async t => {
+  const directory = await mkdtemp(join(tmpdir(), 'small-things-admin-guard-'));
+  const store = openStore(directory, []);
+  if (!store.db.prepare("SELECT name FROM sqlite_master WHERE name='admin_accounts'").get()) store.db.exec(await readFile(new URL('../server/migrations/002-admin.sql', import.meta.url), 'utf8'));
+  t.after(async () => { store.close(); await rm(directory, {recursive:true,force:true}); });
+  const { createHash } = await import('node:crypto');
+  await setAdminAccount(store,'owner','correct horse battery staple');
+  const token='a'.repeat(64),csrf='b'.repeat(64);
+  store.db.prepare('INSERT INTO admin_sessions VALUES(?,?,?,?)').run(createHash('sha256').update(token).digest('hex'),'owner',csrf,Date.now()+10000);
+  let consumed=false;
+  const req={method:'POST',headers:{origin,'content-type':'application/octet-stream'},socket:{remoteAddress:'127.0.0.1'},async *[Symbol.asyncIterator](){consumed=true;yield Buffer.from(ascii);}};
+  const res={setHeader(){}};
+  const admin=createAdminHttp({store,env:{APP_ORIGIN:origin},body:async()=>{throw new Error('unused');},json(){},privateDir:join(directory,'private')});
+  const url=new URL('/api/admin/files/model',origin);
+  await assert.rejects(admin.handle(req,res,url.pathname,url),e=>e.status===401);assert.equal(consumed,false);
+  req.headers.cookie=`small_things_lab_admin=${token}`;req.headers['x-csrf-token']=csrf;req.headers['content-length']=String(50*1024*1024+1);
+  await assert.rejects(admin.handle(req,res,url.pathname,url),e=>e.status===413);assert.equal(consumed,false);
+  req.headers['x-csrf-token']='é'.repeat(64);
+  await assert.rejects(admin.handle(req,res,url.pathname,url),e=>e.status===403);assert.equal(consumed,false);
+});

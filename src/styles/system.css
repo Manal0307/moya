@@ -1,0 +1,1755 @@
+/* Tokki Pocket design system: the last stylesheet loaded, so every page
+   shares one minimal set of rules.
+
+   Page     white, near-black type, 1px grey hairlines for structure.
+   Type     Inter Tight, tight tracking on titles; Geist Mono for small labels.
+   Action   black, like the bunny logo.
+   Objects  white STL renders on a very light grey stage (pure white on the home line).
+   Layout   full width with 24px gutters (16px on phones); long text capped at 720px. */
+
+.portal-shell {
+  /* Pages run edge to edge like the nav; only long-form text is capped. */
+  --page-max: none;
+  --gutter: 24px;
+  --radius: 6px;
+  --r-card: 6px;
+  --r-field: 6px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  background: var(--bg);
+}
+
+/* ---------- Type ---------- */
+.portal-shell.portal-shell :is(h1, h2, h3, h4, h1 *, h2 *, h3 *, h4 *),
+.portal-shell.portal-shell .lab-logo {
+  font-family: var(--font-sans);
+  font-style: normal;
+  color: var(--text);
+}
+.portal-shell.portal-shell h1,
+.portal-shell.portal-shell .studio-page h1 {
+  font-weight: 450;
+  font-size: clamp(36px, 4.4vw, 60px);
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+}
+.portal-shell.portal-shell h1 * {
+  font-weight: inherit;
+}
+.portal-shell.portal-shell h2 {
+  font-weight: 400;
+  font-size: clamp(24px, 2.2vw, 30px);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+.portal-shell.portal-shell :is(h3, h4) {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+/* Accent words in a title are greyed, not coloured. */
+.portal-shell.portal-shell .about-hero h1 > span {
+  color: var(--text-3);
+}
+/* Small labels: grey mono in sentence case, as an editorial annotation. */
+.portal-shell.portal-shell :is(
+    .eyebrow,
+    .studio-kicker,
+    .result-count,
+    .room-heading,
+    .home-objects-heading,
+    .about-lineup-number,
+    .accordion-number,
+    .about-next-top,
+    .cart-table-heading,
+    .file-tag,
+    .included-files > div,
+    .about-steps li > span
+  ) {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--text-3);
+}
+
+/* ---------- Layout ---------- */
+.portal-shell.portal-shell :is(.container, .studio-page) {
+  width: auto;
+  max-width: var(--page-max);
+  margin-inline: 0;
+  padding-inline: var(--gutter);
+  box-sizing: border-box;
+}
+.portal-shell.portal-shell .container.narrow > :not(h1):not(.eyebrow) {
+  max-width: 720px;
+}
+.portal-shell.portal-shell :is(.studio-page, .page) {
+  padding-top: 72px;
+  padding-bottom: 96px;
+}
+
+/* ---------- Navigation: logo left, links centred, bag right ---------- */
+.portal-shell.portal-shell .lab-nav {
+  position: sticky;
+  top: 0;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  max-width: none;
+  height: 56px;
+  margin: 0;
+  padding: 0 var(--gutter);
+  border: 0;
+  border-radius: 0;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+.portal-shell.portal-shell .lab-nav.is-scrolled {
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  box-shadow: 0 1px 0 var(--line);
+}
+.portal-shell.portal-shell .lab-logo {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: start;
+  margin: 0;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+/* The bunny is a pink PNG; brightness(0) turns it solid black like the type. */
+.portal-shell.portal-shell .lab-logo-mark {
+  width: 38px;
+  filter: brightness(0);
+}
+.portal-shell.portal-shell .lab-links {
+  grid-column: 2;
+  grid-row: 1;
+  position: static;
+  transform: none;
+  gap: 4px;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.portal-shell.portal-shell .lab-links a {
+  padding: 6px 8px;
+  border-radius: 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text);
+  background: none;
+}
+.portal-shell.portal-shell .lab-links a:hover,
+.portal-shell.portal-shell .lab-links a.active {
+  background: none;
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+.portal-shell.portal-shell .lab-actions {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+  display: flex;
+  gap: 4px;
+}
+.portal-shell.portal-shell .lab-bag {
+  height: auto;
+  padding: 6px 0 6px 8px;
+  gap: 4px;
+  border-radius: 0;
+  background: none;
+  color: var(--text);
+  box-shadow: none;
+  font-size: 14px;
+  font-weight: 400;
+}
+.portal-shell.portal-shell .lab-bag:hover {
+  background: none;
+  color: var(--text);
+  transform: none;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.portal-shell.portal-shell .lab-bag-label {
+  display: inline;
+}
+.portal-shell.portal-shell .lab-bag-count {
+  display: inline;
+  min-width: 0;
+  height: auto;
+  padding: 0;
+  background: none;
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
+}
+.portal-shell.portal-shell .lab-menu-toggle {
+  width: 36px;
+  height: 36px;
+  background: none;
+}
+.portal-shell.portal-shell .lab-sheet {
+  top: 56px;
+  left: 0;
+  right: 0;
+  padding: 8px var(--gutter) 16px;
+  border: 0;
+  border-radius: 0;
+  background: var(--bg);
+  box-shadow: 0 1px 0 var(--line);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.portal-shell.portal-shell .lab-sheet a {
+  padding: 12px 0;
+  border-radius: 0;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.portal-shell.portal-shell .lab-sheet a:hover {
+  background: none;
+}
+
+/* ---------- Buttons & controls ---------- */
+.portal-shell.portal-shell :is(.button, .object-buy) {
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 999px;
+  background: var(--pop);
+  color: var(--on-pop);
+  font-weight: 500;
+  font-size: 14px;
+  box-shadow: none;
+  transform: none;
+}
+.portal-shell.portal-shell :is(.button, .object-buy):hover {
+  background: var(--pop-hover);
+  color: var(--on-pop);
+  transform: none;
+}
+.portal-shell.portal-shell :is(.button.secondary, .object-cart) {
+  background: var(--bg);
+  color: var(--text);
+  box-shadow: inset 0 0 0 1px var(--text);
+}
+.portal-shell.portal-shell :is(.button.secondary, .object-cart):hover {
+  background: var(--text);
+  color: var(--bg);
+}
+.portal-shell.portal-shell .text-link {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+.portal-shell.portal-shell :is(.contact-subjects span, .category-tabs button) {
+  background: var(--bg);
+  color: var(--text);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.portal-shell.portal-shell :is(.contact-subjects label:hover span, .category-tabs button:hover) {
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--text);
+}
+.portal-shell.portal-shell .contact-subjects input:checked + span,
+.portal-shell.portal-shell .category-tabs button[aria-pressed="true"] {
+  background: var(--text);
+  color: var(--bg);
+  box-shadow: none;
+}
+.portal-shell.portal-shell .contact-subjects input:focus-visible + span {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+.portal-shell.portal-shell :is(input:not([type="checkbox"]):not([type="radio"]), textarea, select) {
+  background: var(--bg);
+  border-radius: var(--r-field);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.portal-shell.portal-shell :is(input:not([type="checkbox"]):not([type="radio"]), textarea, select):hover {
+  background: var(--bg);
+}
+.portal-shell.portal-shell :is(input:not([type="checkbox"]):not([type="radio"]), textarea, select):focus-visible {
+  outline: 0;
+  box-shadow: inset 0 0 0 1px var(--text);
+}
+
+/* ---------- Panels: hairlines, no shadows, no fills ---------- */
+.portal-shell.portal-shell :is(
+    .contact-card,
+    .order-summary,
+    .checkout-summary,
+    .notice,
+    .digital-notice,
+    .contact-note,
+    .form-success,
+    .about-steps li,
+    .contact-topics button
+  ) {
+  background: var(--bg);
+  border-radius: var(--r-card);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.portal-shell.portal-shell .contact-topics button[aria-pressed="true"] {
+  box-shadow: inset 0 0 0 1px var(--text);
+}
+/* FAQ and product details read as a ruled list: one hairline between rows. */
+.portal-shell.portal-shell :is(.faq-item, .accordion:not(.accordion-panel)) {
+  margin: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  border-top: 1px solid var(--line);
+}
+.portal-shell.portal-shell .faq-item {
+  padding-inline: 0;
+}
+.portal-shell.portal-shell .faq-item:last-of-type {
+  border-bottom: 1px solid var(--line);
+}
+.portal-shell.portal-shell .product-detail details.accordion {
+  padding: 0;
+  margin-top: 0;
+}
+.portal-shell.portal-shell .product-detail details.accordion summary {
+  padding-block: 16px;
+  font-weight: 500;
+}
+.portal-shell.portal-shell .about-cta {
+  background: none;
+  border-radius: 0;
+  border-top: 1px solid var(--line);
+  padding-inline: 0;
+}
+
+/* ---------- Product stages ---------- */
+.portal-shell.portal-shell :is(
+    .detail-image,
+    .product-image,
+    .object-photo,
+    .object-angles button,
+    .discovery-card,
+    .discovery-card .product-image,
+    .about-lineup a
+  ) {
+  background: var(--stage);
+  border-radius: var(--r-card);
+  box-shadow: none;
+}
+.portal-shell.portal-shell .about-lineup a:hover {
+  background: var(--stage-deep);
+  transform: none;
+}
+.portal-shell.portal-shell :is(.detail-image, .product-image, .object-photo, .about-lineup) img {
+  filter: drop-shadow(0 14px 12px #0000001f);
+}
+.portal-shell.portal-shell .about-lineup-name {
+  font-weight: 400;
+}
+
+/* ---------- Home 1: hero ---------- */
+.home-hero {
+  position: relative;
+  min-height: calc(100svh - 56px);
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding: 24px var(--gutter);
+  box-sizing: border-box;
+  overflow: hidden;
+  isolation: isolate;
+}
+/* The title floats over the top-left so the object can use the full height. */
+.portal-shell.portal-shell .hero-title {
+  position: absolute;
+  top: 24px;
+  left: var(--gutter);
+  right: var(--gutter);
+  z-index: 2;
+  margin: 0;
+  font-size: clamp(30px, 3.4vw, 48px);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+.word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.08em;
+  margin-right: 0.24em;
+}
+.word-mask > span {
+  display: inline-block;
+}
+.hero-marquee {
+  position: absolute;
+  inset: 50% 0 auto;
+  z-index: -1;
+  transform: translateY(-50%);
+  overflow: hidden;
+  pointer-events: none;
+}
+.hero-marquee-track {
+  display: flex;
+  width: max-content;
+}
+.hero-marquee-track span {
+  /* Room below the baseline so descenders (g, y) are not clipped by the
+     marquee's overflow: hidden. */
+  padding: 0.04em 0.3em 0.26em 0;
+  font-size: clamp(120px, 22vw, 360px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  white-space: nowrap;
+  color: #f1f1f1;
+}
+.hero-object {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+}
+.model3d {
+  position: relative;
+  width: min(calc((100svh - 120px) * 0.85), 84vw, 840px);
+  aspect-ratio: 1;
+}
+.model3d-poster,
+.model3d-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.model3d-poster {
+  object-fit: contain;
+  padding: 6%;
+  box-sizing: border-box;
+  transition: opacity 0.6s var(--ease);
+}
+.model3d-stage {
+  opacity: 0;
+  transition: opacity 0.6s var(--ease);
+}
+.model3d.is-ready .model3d-stage {
+  opacity: 1;
+}
+.model3d.is-ready .model3d-poster {
+  opacity: 0;
+}
+.model3d-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: pan-y;
+}
+.model3d-canvas:active {
+  cursor: grabbing;
+}
+/* Static contact shadow: no per-frame filter work while the canvas spins. */
+.model3d-shadow {
+  position: absolute;
+  left: 22%;
+  right: 22%;
+  bottom: 9%;
+  height: 9%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, #00000026, #0000000d 60%, transparent);
+  pointer-events: none;
+}
+.hero-caption {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  font-size: 14px;
+}
+.hero-caption p {
+  display: flex;
+  gap: 24px;
+  margin: 0;
+}
+.hero-caption p:first-child span + span,
+.hero-caption p:last-child span {
+  color: var(--text-3);
+}
+.portal-shell.portal-shell .hero-caption a:not(.button):not(.hero-name) {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+/* ---------- Footer ---------- */
+.portal-shell.portal-shell .lab-footer {
+  margin-top: 0;
+  padding: 0 var(--gutter);
+  border-top: 1px solid var(--line);
+}
+.portal-shell.portal-shell :is(.lab-footer-top, .lab-footer-bottom) {
+  max-width: none;
+}
+.portal-shell.portal-shell .lab-footer-top {
+  padding-top: 32px;
+}
+.portal-shell.portal-shell .lab-footer-brand p {
+  color: var(--text-2);
+  font-size: 13px;
+}
+.portal-shell.portal-shell .lab-footer-cols p {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-3);
+}
+.portal-shell.portal-shell .lab-footer-cols a {
+  font-size: 13px;
+  color: var(--text);
+}
+.portal-shell.portal-shell .lab-footer-cols a:hover {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.portal-shell.portal-shell .lab-footer-bottom {
+  margin-top: 48px;
+  font-size: 12px;
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 900px) {
+  .portal-shell.portal-shell .lab-links {
+    display: none;
+  }
+  .portal-shell.portal-shell .lab-menu-toggle {
+    display: grid;
+  }
+}
+@media (max-width: 600px) {
+  .portal-shell {
+    --gutter: 16px;
+  }
+  .portal-shell.portal-shell .lab-logo {
+    gap: 8px;
+    font-size: 16px;
+  }
+  .portal-shell.portal-shell .lab-logo-mark {
+    width: 32px;
+  }
+  .hero-caption p {
+    gap: 12px;
+  }
+  .portal-shell.portal-shell :is(.studio-page, .page) {
+    padding-top: 40px;
+  }
+}
+
+/* ---------- Shop: board of equal squares ---------- */
+.shop {
+  padding: 56px var(--gutter) 96px;
+}
+.shop-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 48px;
+}
+.portal-shell.portal-shell .shop-head h1 {
+  margin: 0;
+}
+.portal-shell.portal-shell .shop-count {
+  margin: 0 0 12px;
+}
+.shop-intro {
+  max-width: 360px;
+  margin: 0 0 6px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+.shop-tools {
+  position: sticky;
+  top: 64px; /* sits right under the nav */
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 40px calc(-1 * var(--gutter)) 24px;
+  padding: 12px var(--gutter);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+.shop-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.portal-shell.portal-shell .shop-filters button {
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text);
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-size: 13px;
+  transition: box-shadow 0.2s, background 0.2s, color 0.2s;
+}
+.portal-shell.portal-shell .shop-filters button:hover {
+  box-shadow: inset 0 0 0 1px var(--text);
+}
+.portal-shell.portal-shell .shop-filters button[aria-pressed="true"] {
+  background: var(--text);
+  color: var(--bg);
+  box-shadow: none;
+}
+.shop-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--line);
+  color: var(--text-3);
+}
+.shop-search:focus-within {
+  box-shadow: inset 0 0 0 1px var(--text);
+}
+.portal-shell.portal-shell .shop-search input:not([type="checkbox"]):not([type="radio"]) {
+  width: 160px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  font-size: 13px;
+  color: var(--text);
+}
+.portal-shell.portal-shell .shop-search input:not([type="checkbox"]):not([type="radio"]):focus-visible {
+  outline: 0;
+  box-shadow: none;
+}
+.shop-empty {
+  padding: 80px 0;
+  color: var(--text-2);
+}
+
+/* Even grid: every card is the same square. */
+.pin-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 32px 16px;
+}
+.pin {
+  position: relative;
+  margin: 0;
+}
+.pin-media {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--stage);
+}
+.pin-media { aspect-ratio: 1; }
+.pin-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease);
+}
+.pin-media.is-cutout img {
+  object-fit: contain;
+  padding: 12%;
+  box-sizing: border-box;
+  filter: drop-shadow(0 16px 12px #0000001f);
+}
+.pin-media:hover img {
+  transform: scale(1.04);
+}
+.pin-view {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 13px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.25s, transform 0.25s var(--ease);
+}
+.pin-media:hover .pin-view,
+.pin-media:focus-visible .pin-view {
+  opacity: 1;
+  transform: none;
+}
+.portal-shell.portal-shell .pin-add {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text);
+  opacity: 0;
+  transition: opacity 0.25s, background 0.2s, color 0.2s;
+}
+.pin:hover .pin-add,
+.portal-shell.portal-shell .pin-add:focus-visible,
+.portal-shell.portal-shell .pin-add:disabled {
+  opacity: 1;
+}
+.portal-shell.portal-shell .pin-add:hover:not(:disabled) {
+  background: var(--text);
+  color: var(--bg);
+}
+.portal-shell.portal-shell .pin-add:disabled {
+  background: var(--text);
+  color: var(--bg);
+  cursor: default;
+}
+@media (hover: none) {
+  .portal-shell.portal-shell .pin-add {
+    opacity: 1;
+  }
+}
+.pin-meta {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 12px;
+  padding: 10px 2px 0;
+  font-size: 14px;
+}
+.portal-shell.portal-shell .pin-name {
+  color: var(--text);
+}
+.pin-price {
+  color: var(--text);
+}
+.pin-kind {
+  grid-column: 1 / -1;
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+/* ---------- Product page ---------- */
+.portal-shell.portal-shell .object-detail {
+  padding: 32px var(--gutter) 96px;
+}
+.portal-shell.portal-shell .object-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-2);
+}
+.portal-shell.portal-shell :is(.object-price, .detail-price) {
+  font-family: var(--font-sans);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.portal-shell.portal-shell .object-copy .eyebrow {
+  margin: 0 0 8px;
+}
+.portal-shell.portal-shell :is(.object-disclaimer, .object-terms) {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-2);
+}
+.portal-shell.portal-shell .object-copy details {
+  border-top: 1px solid var(--line);
+  padding: 0;
+}
+.portal-shell.portal-shell .object-copy details:last-of-type {
+  border-bottom: 1px solid var(--line);
+}
+.portal-shell.portal-shell .object-copy summary {
+  padding: 16px 0;
+  font-size: 14px;
+  font-weight: 500;
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+.portal-shell.portal-shell .object-copy summary::-webkit-details-marker {
+  display: none;
+}
+.portal-shell.portal-shell .object-copy summary::after {
+  content: "+";
+  font-weight: 400;
+}
+.portal-shell.portal-shell .object-copy details[open] summary::after {
+  content: "–";
+}
+.portal-shell.portal-shell .object-copy details p {
+  margin: 0 0 16px;
+  font-size: 14px;
+  color: var(--text-2);
+}
+.more-pins {
+  margin-top: 96px;
+}
+.portal-shell.portal-shell .more-pins h2 {
+  margin: 0 0 24px;
+}
+
+@media (max-width: 600px) {
+  .shop {
+    padding-top: 32px;
+  }
+  .pin-board {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 10px;
+  }
+  .shop-search {
+    flex: 1;
+  }
+  .portal-shell.portal-shell .shop-search input:not([type="checkbox"]):not([type="radio"]) {
+    width: 100%;
+  }
+}
+
+/* ---------- Home 2: statement ---------- */
+.statement {
+  padding: 22vh var(--gutter);
+}
+.statement-pair {
+  white-space: nowrap;
+}
+.statement-star {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-left: 0.26em;
+  vertical-align: -0.02em;
+  color: var(--text);
+}
+.statement-star svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.statement-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 40px;
+}
+.portal-shell.portal-shell .statement-cta .button {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+.statement p {
+  max-width: 1100px;
+  margin: 0;
+  font-size: clamp(32px, 4.4vw, 64px);
+  line-height: 1.12;
+  letter-spacing: -0.04em;
+  color: var(--text);
+}
+
+/* ---------- Cursor ---------- */
+/* Hide the system pointer everywhere while the custom cursor is on, including
+   pseudo-elements and the root, so the arrow never shows next to the dot. */
+html.has-cursor,
+html.has-cursor body,
+html.has-cursor *,
+html.has-cursor *::before,
+html.has-cursor *::after {
+  /* A fully transparent 1x1 cursor image first: Chrome on macOS can fall back
+     to the arrow with "none" alone (pointer accessibility settings, a still
+     pointer over changing content). "none" stays as the fallback. */
+  cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGNgYGBgAAAABQABpfZFQAAAAABJRU5ErkJggg==") 0 0, none !important;
+}
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+}
+.cursor-disc {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: #111;
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* ---------- Page entrance ---------- */
+.page-enter {
+  animation: page-in 0.7s var(--ease) both;
+}
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Image tilt on the shop board. */
+.pin-media {
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+.pin-media:hover {
+  transform: translateY(-4px);
+}
+
+@media (max-width: 700px) {
+  .statement {
+    padding: 14vh var(--gutter);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-enter {
+    animation: none;
+  }
+}
+
+/* Products without a real STL render yet show only the empty stage. */
+.media-empty {
+  display: block;
+  background: var(--stage);
+  border-radius: var(--r-card);
+}
+.portal-shell.portal-shell .detail-image .media-empty {
+  width: 100%;
+  aspect-ratio: 1;
+  max-height: 650px;
+}
+.portal-shell.portal-shell .cart-row .media-empty {
+  width: 90px;
+  height: 100px;
+}
+.portal-shell.portal-shell .mini-product .media-empty {
+  flex: none;
+  width: 48px;
+  height: 62px;
+}
+@media (max-width: 600px) {
+  .portal-shell.portal-shell .cart-row .media-empty {
+    width: 60px;
+    height: 85px;
+  }
+}
+
+/* ---------- Home: hero purchase bar ---------- */
+.portal-shell.portal-shell .hero-caption {
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+}
+.hero-product {
+  display: grid;
+  gap: 2px;
+}
+.portal-shell.portal-shell .hero-name {
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  text-decoration: none;
+}
+.hero-product span {
+  font-size: 13px;
+  color: var(--text-3);
+}
+.hero-buy {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-price {
+  margin-right: 8px;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+.portal-shell.portal-shell .hero-buy .button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+/* ---------- Home: facts ---------- */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.fact {
+  padding: 28px var(--gutter);
+}
+.fact + .fact {
+  border-left: 1px solid var(--line);
+}
+.portal-shell.portal-shell .fact h3 {
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+.fact p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* ---------- Home: ready to print / how it works ---------- */
+.ready,
+.steps {
+  padding: 120px var(--gutter) 0;
+}
+.section-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.portal-shell.portal-shell .section-row h2,
+.portal-shell.portal-shell .steps h2 {
+  margin: 0;
+  font-size: clamp(32px, 3.6vw, 52px);
+  letter-spacing: -0.04em;
+}
+.ready .pin-board {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+@media (max-width: 900px) {
+  .ready .pin-board {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.portal-shell.portal-shell .section-row .button {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+.steps ol {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 32px 0 40px;
+  padding: 0;
+}
+.steps li {
+  padding: 28px 0 0;
+  border-top: 1px solid var(--text);
+}
+.step-index {
+  font-size: 13px;
+  color: var(--text-3);
+}
+.portal-shell.portal-shell .steps h3 {
+  margin: 40px 0 8px;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+.steps p {
+  max-width: 320px;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+.portal-shell.portal-shell .steps > .button {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+@media (max-width: 900px) {
+  .facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .fact:nth-child(3) {
+    border-left: 0;
+  }
+  .fact:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
+  .steps ol {
+    grid-template-columns: 1fr;
+  }
+  .portal-shell.portal-shell .steps h3 {
+    margin-top: 16px;
+  }
+}
+@media (max-width: 600px) {
+  .hero-buy {
+    width: 100%;
+  }
+  .portal-shell.portal-shell .hero-buy .button {
+    flex: 1;
+    justify-content: center;
+    padding: 0 12px;
+  }
+  .ready,
+  .steps {
+    padding-top: 80px;
+  }
+}
+
+/* ---------- Nav rhythm: one type size and one line height for every item,
+   so all labels share a baseline; the bunny is sized to the text. ---------- */
+.portal-shell.portal-shell .lab-nav {
+  height: 64px;
+  --nav-type: 15px;
+}
+.portal-shell.portal-shell .lab-nav :is(.lab-logo, .lab-links a, .lab-bag, .lab-bag-count) {
+  font-size: var(--nav-type);
+  line-height: 1;
+}
+.portal-shell.portal-shell .lab-nav .lab-logo {
+  gap: 8px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.portal-shell.portal-shell .lab-nav .lab-logo-mark {
+  width: 36px;
+  /* Sits slightly above the text centre line. */
+  transform: translateY(-2px);
+}
+.portal-shell.portal-shell .lab-nav .lab-links {
+  gap: 8px;
+}
+.portal-shell.portal-shell .lab-nav :is(.lab-links a, .lab-bag) {
+  padding: 8px 6px;
+}
+/* Bag text ends on the right gutter, mirroring the logo on the left. */
+.portal-shell.portal-shell .lab-nav .lab-actions a.lab-bag {
+  padding-right: 0;
+}
+.portal-shell.portal-shell .lab-sheet {
+  top: 64px;
+}
+@media (max-width: 600px) {
+  .portal-shell.portal-shell .lab-nav {
+    height: 56px;
+  }
+  .portal-shell.portal-shell .lab-nav .lab-logo-mark {
+    width: 30px;
+  }
+  .portal-shell.portal-shell .lab-sheet {
+    top: 56px;
+  }
+  .shop-tools {
+    top: 56px;
+  }
+}
+
+/* ---------- Contact ---------- */
+.contact-email {
+  margin-top: 36px;
+  padding: 18px 20px;
+  border-radius: var(--r-card);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.contact-email-label {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-3);
+}
+.contact-email-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.portal-shell.portal-shell .contact-email-row a {
+  font-size: clamp(18px, 1.8vw, 22px);
+  letter-spacing: -0.02em;
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+  overflow-wrap: anywhere;
+}
+.portal-shell.portal-shell .contact-copy {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--text);
+  transition: background 0.2s;
+}
+.portal-shell.portal-shell .contact-copy:hover {
+  background: var(--surface-3);
+}
+/* Subject chips: the selected state is a sliding pill behind the label. */
+.portal-shell.portal-shell .contact-subjects span {
+  position: relative;
+  isolation: isolate;
+}
+.portal-shell.portal-shell .contact-subjects input:checked + span {
+  background: var(--bg);
+  color: var(--bg);
+  box-shadow: inset 0 0 0 1px transparent;
+}
+.contact-subjects span b {
+  position: relative;
+  z-index: 1;
+  font-weight: inherit;
+}
+.subject-pill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 999px;
+  background: var(--text);
+}
+.contact-success > span {
+  display: inline-flex;
+}
+
+/* ---------- FAQ ---------- */
+.portal-shell.portal-shell .faq-page .page-heading h1 {
+  position: relative;
+  display: inline-block;
+}
+.faq-star {
+  display: inline-block;
+  width: 0.4em;
+  height: 0.4em;
+  margin-left: 0.14em;
+  vertical-align: 0.28em;
+  transform: rotate(14deg);
+}
+.faq-star svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.faq-list {
+  margin-top: 40px;
+}
+.portal-shell.portal-shell .faq-question {
+  margin: 0;
+  font-size: inherit;
+}
+.portal-shell.portal-shell .faq-question button {
+  display: grid;
+  grid-template-columns: 2.6em 1fr auto;
+  align-items: baseline;
+  width: 100%;
+  padding: 20px 0;
+  background: none;
+  color: var(--text);
+  text-align: left;
+  font-family: var(--font-sans);
+  cursor: pointer;
+}
+.faq-index {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-3);
+}
+.faq-q {
+  font-size: clamp(17px, 1.6vw, 20px);
+  font-weight: 450;
+  letter-spacing: -0.02em;
+  transition: transform 0.35s var(--ease);
+}
+.faq-question button:hover .faq-q {
+  transform: translateX(6px);
+}
+.faq-icon {
+  display: inline-block;
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 1;
+}
+.faq-answer {
+  overflow: hidden;
+}
+.faq-answer p {
+  max-width: 620px;
+  margin: 0;
+  padding: 0 0 22px 2.6em;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+.portal-shell.portal-shell .faq-page .help-block {
+  margin-top: 72px;
+}
+.portal-shell.portal-shell .faq-page .help-block .button {
+  display: inline-flex;
+  margin-top: 16px;
+  text-decoration: none;
+}
+/* Footer email */
+.portal-shell.portal-shell .lab-footer-email {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ---------- Arrows: one straight arrow everywhere (components/Arrow.tsx) ---------- */
+.portal-shell.portal-shell :is(.button, .text-link) {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+/* Product page buy button stays full width: label left, price and arrow right. */
+.portal-shell.portal-shell .object-buy {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+}
+.portal-shell.portal-shell .object-buy > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn-arrow {
+  flex: none;
+  transition: transform 0.3s var(--ease);
+}
+:is(a, button):hover > .btn-arrow-right,
+:is(a, button):hover > * > .btn-arrow-right {
+  transform: translateX(3px);
+}
+:is(a, button):hover > .btn-arrow-left {
+  transform: translateX(-3px);
+}
+
+/* ---------- Contact layout: intro left, three-step form right ---------- */
+.portal-shell.portal-shell .contact {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 6vw;
+  align-items: start;
+}
+.portal-shell.portal-shell .contact-intro {
+  position: sticky;
+  top: 104px;
+}
+.portal-shell.portal-shell .contact-lead {
+  max-width: 380px;
+  margin: 20px 0 0;
+}
+.portal-shell.portal-shell .contact-form {
+  display: grid;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.contact-step {
+  margin: 0;
+  padding: 28px 32px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  min-width: 0;
+}
+.portal-shell.portal-shell .contact-step legend {
+  float: left;
+  width: 100%;
+  margin: 0 0 16px;
+  padding: 0;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.contact-step legend + * {
+  clear: both;
+}
+.step-number {
+  margin-right: 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-3);
+}
+.portal-shell.portal-shell .contact-step .contact-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.portal-shell.portal-shell .contact-step label {
+  display: grid;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-2);
+}
+.portal-shell.portal-shell .contact-step textarea {
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+}
+.contact-hint {
+  margin: 14px 0 0;
+  font-size: 13px;
+  color: var(--text-2);
+}
+.portal-shell.portal-shell .contact-form .error-message {
+  margin: 16px 32px 0;
+}
+.portal-shell.portal-shell .contact-form .contact-submit {
+  padding: 22px 32px 28px;
+}
+.portal-shell.portal-shell .contact-success {
+  padding: 32px;
+}
+@media (max-width: 900px) {
+  .portal-shell.portal-shell .contact {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .portal-shell.portal-shell .contact-intro {
+    position: static;
+  }
+}
+@media (max-width: 600px) {
+  .contact-step {
+    padding: 24px 20px;
+  }
+  .portal-shell.portal-shell .contact-step .contact-row {
+    grid-template-columns: 1fr;
+  }
+  .portal-shell.portal-shell .contact-form .contact-submit {
+    padding: 20px;
+  }
+  .portal-shell.portal-shell .contact-form .error-message {
+    margin: 16px 20px 0;
+  }
+}
+
+/* ---------- About ---------- */
+.ab-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 32px 6vw;
+  align-items: end;
+}
+.portal-shell.portal-shell .ab-hero h1 {
+  /* Same size as every other page title (see the shared h1 rule). */
+  margin: 0;
+}
+.ab-star {
+  display: inline-block;
+  width: 0.38em;
+  height: 0.38em;
+  margin-left: 0.12em;
+  vertical-align: 0.3em;
+  transform: rotate(-10deg);
+}
+.ab-star svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.ab-hero-side p {
+  max-width: 420px;
+  margin: 0 0 24px;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+.ab-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.portal-shell.portal-shell .ab-actions .button {
+  text-decoration: none;
+}
+.ab-points {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 96px;
+  border-top: 1px solid var(--line);
+}
+.ab-point {
+  padding: 28px 32px 0 0;
+}
+.ab-point + .ab-point {
+  padding-left: 32px;
+  border-left: 1px solid var(--line);
+}
+.portal-shell.portal-shell .ab-point h2 {
+  margin: 0 0 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--text-3);
+}
+.ab-point p {
+  max-width: 340px;
+  margin: 0;
+  font-size: clamp(18px, 1.6vw, 22px);
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.ab-collection,
+.ab-steps {
+  margin-top: 120px;
+}
+.ab-board {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.portal-shell.portal-shell .ab-steps h2 {
+  margin: 0;
+  font-size: clamp(32px, 3.6vw, 52px);
+  letter-spacing: -0.04em;
+}
+.ab-steps ol {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 32px 0 0;
+  padding: 0;
+}
+.ab-steps li {
+  padding-top: 24px;
+  border-top: 1px solid var(--text);
+}
+.portal-shell.portal-shell .ab-steps h3 {
+  margin: 32px 0 8px;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+.ab-steps p {
+  max-width: 320px;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+.ab-custom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px 48px;
+  margin-top: 120px;
+  padding: 40px;
+  border-radius: var(--r-card);
+  background: var(--stage);
+}
+.portal-shell.portal-shell .ab-custom h2 {
+  margin: 0 0 10px;
+}
+.ab-custom p {
+  max-width: 520px;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+.portal-shell.portal-shell .ab-custom .button {
+  text-decoration: none;
+}
+@media (max-width: 1000px) {
+  .ab-board {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 800px) {
+  .ab-hero,
+  .ab-points,
+  .ab-steps ol {
+    grid-template-columns: 1fr;
+  }
+  .ab-points {
+    margin-top: 64px;
+  }
+  .ab-point,
+  .ab-point + .ab-point {
+    padding: 24px 0;
+    border-left: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .ab-collection,
+  .ab-steps,
+  .ab-custom {
+    margin-top: 80px;
+  }
+  .ab-custom {
+    padding: 28px 24px;
+  }
+}
+@media (max-width: 600px) {
+  .ab-board {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Order page: recovery form on one clean row. */
+.portal-shell.portal-shell .recover-form {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  max-width: 520px;
+  margin: 32px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+.recover-intro {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-2);
+}
+.recover-row {
+  display: flex;
+  gap: 8px;
+}
+.recover-row label {
+  flex: 1;
+  min-width: 0;
+}
+.portal-shell.portal-shell .recover-row input {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  box-sizing: border-box;
+}
+.recover-form [role="status"]:empty {
+  display: none;
+}
+@media (max-width: 600px) {
+  .recover-row {
+    flex-direction: column;
+  }
+}
+
+/* ---------- Home hero: two light-grey stars in the background ---------- */
+.hero-stage {
+  position: relative;
+}
+.hero-bg-stars {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hero-bg-star {
+  position: absolute;
+  display: block;
+  color: #ececec;
+  animation: star-turn 60s linear infinite;
+}
+.hero-bg-star svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+/* The marquee band is centred and about 1.3x its font size tall
+   (font-size: clamp(120px, 22vw, 360px)). The three stars form a triangle
+   around the cat, just outside that band, so they never overlap the
+   background lettering, the cat, the nav or the caption. */
+.hero-bg-stars {
+  --band-half: clamp(78px, 14.3vw, 234px);
+  --gap: 14px;
+}
+/* Top left, just above the band. */
+.hero-bg-star-a {
+  left: 20%;
+  bottom: calc(50% + var(--band-half) + var(--gap));
+  width: min(7vw, 10vh, 110px);
+  height: min(7vw, 10vh, 110px);
+}
+/* Bottom right, just below the band. */
+.hero-bg-star-b {
+  right: 21%;
+  top: calc(50% + var(--band-half) + var(--gap));
+  width: min(5vw, 7vh, 76px);
+  height: min(5vw, 7vh, 76px);
+  animation-duration: 80s;
+  animation-direction: reverse;
+}
+/* Top right, smaller and a little higher than the first. */
+.hero-bg-star-c {
+  right: 17%;
+  bottom: calc(50% + var(--band-half) + var(--gap) + min(5vh, 48px));
+  width: min(3.6vw, 5vh, 54px);
+  height: min(3.6vw, 5vh, 54px);
+  animation-duration: 70s;
+}
+@keyframes star-turn {
+  from { rotate: 0deg; }
+  to { rotate: 360deg; }
+}
+@media (max-width: 700px) {
+  /* On phones the cat fills the width, so the two top stars move up above
+     it instead of hiding behind its ears. */
+  .hero-bg-star-a {
+    left: 10%;
+    top: 12%;
+    bottom: auto;
+    width: min(17vw, 72px);
+    height: min(17vw, 72px);
+  }
+  .hero-bg-star-b {
+    right: 6%;
+    width: min(12vw, 50px);
+    height: min(12vw, 50px);
+  }
+  .hero-bg-star-c {
+    right: 14%;
+    top: 7%;
+    bottom: auto;
+    width: min(9vw, 38px);
+    height: min(9vw, 38px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg-star {
+    animation: none;
+  }
+}
+/* Two-tone page titles (About, Contact, Shop): second line in grey. */
+.portal-shell.portal-shell :is(.ab-hero, .contact-intro, .shop-head) h1 .ab-title-soft {
+  color: var(--text-3);
+}

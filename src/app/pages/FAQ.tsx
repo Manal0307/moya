@@ -1,243 +1,149 @@
-import { motion, AnimatePresence } from 'motion/react';
-import { ChevronDown, FileQuestion, Download, Printer, Scale, Settings, RefreshCw, Mail } from 'lucide-react';
-import { useState } from 'react';
+import { useState } from "react";
+import { Link } from "react-router";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { CONTACT_EMAIL } from "../data/contact";
+import { Star } from "../components/Star";
+import { Arrow } from "../components/Arrow";
 
-interface FAQItem {
-  question: string;
-  answer: string;
-  icon: typeof FileQuestion;
-  color: string;
-}
+const EASE = [0.22, 1, 0.36, 1] as const;
 
-const faqs: FAQItem[] = [
-  {
-    question: "Qu'est-ce qu'un fichier STL ?",
-    answer: "Un fichier STL est un format utilisé pour l'impression 3D. Vous pouvez l'ouvrir avec n'importe quel logiciel de tranchage comme Cura, PrusaSlicer ou Simplify3D.",
-    icon: FileQuestion,
-    color: '#BBBBFF'
-  },
-  {
-    question: 'Comment télécharger mes fichiers ?',
-    answer: "Immédiatement après votre paiement, vous recevrez un email avec les liens de téléchargement. Les liens restent actifs pendant 30 jours.",
-    icon: Download,
-    color: '#F0B4DF'
-  },
-  {
-    question: 'Puis-je imprimer les fichiers plusieurs fois ?',
-    answer: "Oui ! Une fois acheté, vous pouvez l'imprimer autant de fois que vous le souhaitez pour votre usage personnel.",
-    icon: RefreshCw,
-    color: '#BBBBFF'
-  },
-  {
-    question: 'Ai-je le droit de vendre mes impressions ?',
-    answer: "Les fichiers sont pour usage personnel uniquement. Contactez-moi pour discuter d'une licence commerciale.",
-    icon: Scale,
-    color: '#F0B4DF'
-  },
-  {
-    question: 'Quelle imprimante 3D me conseillez-vous ?',
-    answer: "Mes modèles fonctionnent avec la plupart des imprimantes FDM. Une Ender 3, Prusa Mini ou Bambu Lab A1 est parfaite pour commencer.",
-    icon: Printer,
-    color: '#BBBBFF'
-  },
-  {
-    question: "Quels réglages d'impression ?",
-    answer: "Hauteur de couche 0.2mm, remplissage 15-20%. Pour un effet glossy, utilisez du PLA silk. Chaque produit inclut des recommandations spécifiques.",
-    icon: Settings,
-    color: '#F0B4DF'
-  },
-  {
-    question: 'Puis-je obtenir un remboursement ?',
-    answer: "En raison de la nature digitale des produits, les remboursements ne sont pas possibles sauf en cas de problème technique.",
-    icon: RefreshCw,
-    color: '#BBBBFF'
-  },
-  {
-    question: 'Comment me contacter ?',
-    answer: "Par email à hello@popcharms.com. Je réponds généralement dans les 24-48h.",
-    icon: Mail,
-    color: '#F0B4DF'
-  },
+export const faqs = [
+  [
+    "What am I buying?",
+    "A digital STL file describing a three-dimensional shape. No physical object or printer is included. Preview textures and colours illustrate the model.",
+  ],
+  [
+    "How do I download my file?",
+    "After payment is verified, download buttons appear on your order page. Bookmark that private page and back up your files.",
+  ],
+  [
+    "Can I print a model more than once?",
+    "Yes, for personal use. One copy of the file is enough, so each model can only appear once in a single order.",
+  ],
+  [
+    "What do I need to print?",
+    "A 3D printer and STL-compatible slicing software, or a printing service. Settings and supports depend on your equipment, material and chosen scale.",
+  ],
+  [
+    "Can I sell the files or physical prints?",
+    "The collection is offered for personal use. For commercial use, contact the studio before buying to discuss the required permission.",
+  ],
+  [
+    "What if my payment is interrupted?",
+    "Your cart is preserved. Return to checkout to try again. If you believe you have been charged, check your order page and contact the studio before paying again.",
+  ],
+  [
+    "How do I get help with a file?",
+    `Use the contact form or write to ${CONTACT_EMAIL} with the model name and your payment reference. Never send card or banking details.`,
+  ],
+  [
+    "Can I request a custom model?",
+    "Yes. Describe your idea, its intended use and dimensions in the contact form. Scope, price and timing will be agreed before work begins.",
+  ],
 ];
 
 export function FAQ() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const reduce = useReducedMotion();
+  const [open, setOpen] = useState<number | null>(0);
+  const rise = (i: number) =>
+    reduce
+      ? {}
+      : {
+          initial: { opacity: 0, y: 18 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.7, ease: EASE, delay: 0.05 + i * 0.07 },
+        };
 
   return (
-    <div className="pt-16 min-h-screen">
-      <div className="bg-[#f8f6f3]">
-        <div className="max-w-6xl mx-auto px-6 py-14 md:py-20 text-center">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h1 className="text-3xl md:text-5xl text-[#190933] mb-3 tracking-tight" style={{ fontWeight: 300 }}>
-              FAQ
-            </h1>
-            <p className="text-sm text-[#8a8290]">Questions fréquentes</p>
-          </motion.div>
-        </div>
+    <div className="container page narrow faq-page">
+      <div className="page-heading">
+        <motion.p className="eyebrow" {...rise(0)}>
+          A little guidance
+        </motion.p>
+        <motion.h1 {...rise(1)}>
+          A few questions,
+          <br />
+          <em>answered.</em>
+          <span className="faq-star" aria-hidden="true">
+            <Star variant={2} />
+          </span>
+        </motion.h1>
+        <motion.p {...rise(2)}>
+          The essentials for choosing, downloading and printing your model.
+        </motion.p>
       </div>
 
-      <div className="max-w-3xl mx-auto px-6 py-12">
-        <div className="space-y-3">
-          {faqs.map((faq, index) => {
-            const Icon = faq.icon;
-            const isOpen = openIndex === index;
-            const isHovered = hoveredIndex === index;
-            
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05, duration: 0.4 }}
-                onHoverStart={() => setHoveredIndex(index)}
-                onHoverEnd={() => setHoveredIndex(null)}
-                className="relative"
-              >
-                <motion.div
-                  animate={{
-                    scale: isOpen ? 1.02 : 1,
-                  }}
-                  transition={{ duration: 0.2 }}
-                  className={`bg-white rounded-xl border transition-all duration-300 overflow-hidden ${
-                    isOpen 
-                      ? 'border-[#190933]/20 shadow-lg' 
-                      : 'border-gray-200 shadow-sm hover:shadow-md'
-                  }`}
-                >
-                  {/* Colored accent bar */}
-                  <motion.div
-                    className="absolute top-0 left-0 w-1 h-full"
-                    style={{ backgroundColor: faq.color }}
-                    initial={{ scaleY: 0 }}
-                    animate={{ scaleY: isOpen || isHovered ? 1 : 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
-
-                  <button
-                    onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                    className="w-full p-5 flex items-center gap-4 text-left"
-                  >
-                    {/* Icon */}
-                    <motion.div
-                      animate={{
-                        rotate: isOpen ? 360 : 0,
-                        scale: isOpen || isHovered ? 1.1 : 1
-                      }}
-                      transition={{ duration: 0.4 }}
-                      className="flex-shrink-0"
-                    >
-                      <div 
-                        className="w-10 h-10 rounded-lg flex items-center justify-center transition-colors duration-300"
-                        style={{ 
-                          backgroundColor: isOpen || isHovered ? `${faq.color}20` : '#f8f6f3'
-                        }}
-                      >
-                        <Icon 
-                          className="w-5 h-5 transition-colors duration-300" 
-                          style={{ color: isOpen || isHovered ? faq.color : '#8a8290' }}
-                          strokeWidth={1.5}
-                        />
-                      </div>
-                    </motion.div>
-
-                    {/* Question */}
-                    <span 
-                      className="flex-1 text-sm transition-colors duration-300" 
-                      style={{ 
-                        fontWeight: 500,
-                        color: isOpen ? '#190933' : '#190933'
-                      }}
-                    >
-                      {faq.question}
-                    </span>
-
-                    {/* Chevron */}
-                    <motion.div
-                      animate={{ rotate: isOpen ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <ChevronDown
-                        className="w-5 h-5 transition-colors duration-300"
-                        style={{ color: isOpen ? faq.color : '#8a8290' }}
-                        strokeWidth={1.5}
-                      />
-                    </motion.div>
-                  </button>
-
-                  {/* Answer with smooth animation */}
-                  <AnimatePresence>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: 'easeInOut' }}
-                      >
-                        <motion.div 
-                          className="px-5 pb-5 pl-[76px]"
-                          initial={{ y: -10 }}
-                          animate={{ y: 0 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          <p className="text-sm text-[#8a8290]" style={{ lineHeight: 1.8 }}>
-                            {faq.answer}
-                          </p>
-                        </motion.div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              </motion.div>
-            );
-          })}
-        </div>
-
-        {/* Enhanced contact section */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-16"
-        >
-          <div className="bg-gradient-to-br from-[#BBBBFF]/10 to-[#F0B4DF]/10 rounded-2xl p-8 text-center">
+      <div className="faq-list">
+        {faqs.map(([q, a], i) => {
+          const isOpen = open === i;
+          const id = `faq-${i}`;
+          return (
             <motion.div
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-              className="inline-block mb-4"
+              className={`faq-item ${isOpen ? "is-open" : ""}`}
+              key={q}
+              initial={reduce ? false : { opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "0px 0px -6% 0px" }}
+              transition={{ duration: 0.6, ease: EASE, delay: Math.min(i, 6) * 0.05 }}
             >
-              <div className="w-16 h-16 mx-auto bg-white rounded-full flex items-center justify-center shadow-md">
-                <Mail className="w-8 h-8 text-[#BBBBFF]" strokeWidth={1.5} />
-              </div>
+              <h2 className="faq-question">
+                <button
+                  type="button"
+                  aria-expanded={isOpen}
+                  aria-controls={id}
+                  onClick={() => setOpen(isOpen ? null : i)}
+                >
+                  <span className="faq-index">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="faq-q">{q}</span>
+                  <motion.span
+                    className="faq-icon"
+                    aria-hidden="true"
+                    animate={{ rotate: isOpen ? 45 : 0 }}
+                    transition={{ type: "spring", stiffness: 380, damping: 26 }}
+                  >
+                    +
+                  </motion.span>
+                </button>
+              </h2>
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    id={id}
+                    role="region"
+                    className="faq-answer"
+                    initial={reduce ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                    animate={reduce ? { opacity: 1 } : { height: "auto", opacity: 1 }}
+                    exit={reduce ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                    transition={{ duration: 0.45, ease: EASE }}
+                  >
+                    <p>{a}</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
-            
-            <h3 className="text-lg text-[#190933] mb-2" style={{ fontWeight: 500 }}>
-              Besoin d&apos;aide ?
-            </h3>
-            <p className="text-sm text-[#8a8290] mb-5" style={{ lineHeight: 1.7 }}>
-              Vous avez d&apos;autres questions ? N&apos;hésitez pas à me contacter.
-              <br />
-              Je réponds généralement dans les 24-48h.
-            </p>
-            <motion.a
-              href="mailto:hello@popcharms.com"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-block bg-white text-[#190933] px-6 py-3 rounded-lg text-sm border border-gray-200 hover:border-[#BBBBFF] hover:shadow-md transition-all duration-300"
-              style={{ fontWeight: 500 }}
-            >
-              hello@popcharms.com
-            </motion.a>
-          </div>
-        </motion.div>
+          );
+        })}
       </div>
+
+      <motion.div
+        className="help-block"
+        initial={reduce ? false : { opacity: 0, y: 18 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7, ease: EASE }}
+      >
+        <h2>Still wondering?</h2>
+        <p>
+          Tell us what you need help with, or write to{" "}
+          <a className="text-link" href={`mailto:${CONTACT_EMAIL}`}>
+            {CONTACT_EMAIL}
+          </a>
+          .
+        </p>
+        <Link className="button" to="/contact">
+          Contact the studio <Arrow />
+        </Link>
+      </motion.div>
     </div>
   );
 }

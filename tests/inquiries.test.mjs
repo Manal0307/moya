@@ -1,0 +1,21 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {mkdtemp,mkdir,writeFile,symlink,rm} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {createInquiries} from '../server/inquiries.mjs';
+test('inbox safely handles missing directory, corrupt records and symlinks',async t=>{
+ const dir=await mkdtemp(join(tmpdir(),'inbox-'));t.after(()=>rm(dir,{recursive:true,force:true}));
+ const inbox=createInquiries(dir);assert.equal((await inbox.list()).total,0);
+ await mkdir(join(dir,'inquiries'));
+ const id='STL-00000000-0000-4000-8000-000000000001';
+ await writeFile(join(dir,'inquiries',id+'.json'),'invalid JSON');
+ assert.deepEqual((await inbox.list()).messages,[]);
+ await assert.rejects(inbox.get(id),{status:404});
+ await assert.rejects(inbox.get('../secret'),{status:404});
+ await assert.rejects(inbox.list('0'),{status:400});
+ const link='STL-00000000-0000-4000-8000-000000000002';
+ await symlink(join(dir,'inquiries',id+'.json'),join(dir,'inquiries',link+'.json'));
+ await assert.rejects(inbox.get(link),{status:404});
+ assert.equal((await inbox.list()).total,1);
+});

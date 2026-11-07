@@ -1,99 +1,71 @@
-import { Product } from '../types';
-import charmBunny from '../../assets/2575b3f2cc3c6ff004740f01bd56cb1ec02f4ce4.png';
-import charmCat from '../../assets/9926b4e8a713b52cf81185a7c104c193c5283829.png';
-import charmKitty from '../../assets/ecdb900658fc77f5565057733a8a559582612484.png';
-import charmSilver from '../../assets/65d0a4941277e1c922b34b26655ab8bd2259317c.png';
+import { Product } from "../types";
+import charmBunny from "../../assets/2575b3f2cc3c6ff004740f01bd56cb1ec02f4ce4.png";
+import charmCat from "../../assets/9926b4e8a713b52cf81185a7c104c193c5283829.png";
+import charmKitty from "../../assets/ecdb900658fc77f5565057733a8a559582612484.png";
+import charmSilver from "../../assets/65d0a4941277e1c922b34b26655ab8bd2259317c.png";
+import catalog from "./catalog.json";
+const images: Record<string, string> = {
+  charmBunny,
+  charmCat,
+  charmKitty,
+  charmSilver,
+};
+export let products: Product[] = catalog.map((p) => ({
+  ...p,
+  category: p.category as Product["category"],
+  image: images[p.image] ?? p.image,
+}));
+export const categories: Record<string, string> = {
+  charm: "Charms",
+  keychain: "Keychains",
+  "art-toy": "Art toys",
+  decoration: "Decor",
+};
+// STL listings show the smooth-shaded render (scripts/render-stl-smooth.py),
+// served as WebP made by scripts/optimize-previews.py: 480 px for cards,
+// 1200 px for large views. The 1600 px PNG masters are never sent to visitors.
+// The Catstar listing still points at a placeholder, so it is mapped by id.
+export type PreviewSize = 480 | 1200;
+export const renderSrc = (name: string, size: PreviewSize = 1200) =>
+  `/previews/smooth/${name}-${size}.webp`;
+export const previewImage = (product: Product, size: PreviewSize = 1200) => {
+  if (product.id === "catstar-test") return renderSrc("catstar", size);
+  const render = product.image.match(/^\/previews\/([\w-]+)\.png$/);
+  return render ? renderSrc(render[1], size) : product.image;
+};
+// srcset pair so cards stay sharp on high-density screens.
+export const previewSrcSet = (product: Product) =>
+  `${previewImage(product, 480)} 480w, ${previewImage(product, 1200)} 1200w`;
+// The image to show for a product: its STL render, or null when there is no
+// real STL render yet (photo placeholders are not shown; the empty stage is).
+export const stlImage = (product: Product, size: PreviewSize = 1200) =>
+  isCutout(product) ? previewImage(product, size) : null;
+// Renders from the STL files are transparent cut-outs; everything else is a photo.
+export const isCutout = (product: Product) =>
+  previewImage(product).startsWith("/previews/");
+export const money = (amount: number) =>
+  new Intl.NumberFormat("en-IE", { style: "currency", currency: "EUR" }).format(
+    amount,
+  );
 
-export const products: Product[] = [
-  {
-    id: '1',
-    name: 'Dreamy Star Charm',
-    price: 2.99,
-    category: 'charm',
-    description: 'Un charm étoile irisé aux formes douces',
-    image: charmBunny,
-    details: 'Fichier STL optimisé pour impression 3D. Parfait pour créer vos propres bijoux ou accessoires. Design original avec finition brillante recommandée.',
-    fileSize: '2.4 MB',
-    printTime: '~45 min',
-    featured: true,
-  },
-  {
-    id: '2',
-    name: 'Pearl Cloud Keychain',
-    price: 3.49,
-    category: 'keychain',
-    description: 'Porte-clés nuage nacré et doux',
-    image: charmCat,
-    details: 'Design minimaliste avec trou pour anneau. Recommandé en PLA perlé ou filament à effet nacré pour un rendu optimal.',
-    fileSize: '3.1 MB',
-    printTime: '~1h 10min',
-    featured: true,
-  },
-  {
-    id: '3',
-    name: 'Glossy Heart Pop',
-    price: 4.99,
-    category: 'art-toy',
-    description: 'Mini art toy cœur glossy',
-    image: charmKitty,
-    details: 'Art toy de collection au design mignon et arrondi. Idéal pour décorer votre espace ou débuter une collection. Support non nécessaire.',
-    fileSize: '5.8 MB',
-    printTime: '~2h 30min',
-    featured: true,
-  },
-  {
-    id: '4',
-    name: 'Silver Moon Charm',
-    price: 2.49,
-    category: 'charm',
-    description: 'Petit croissant de lune argenté',
-    image: charmSilver,
-    details: 'Charm délicat parfait pour boucles d\'oreilles ou bracelets. Design fin et élégant.',
-    fileSize: '1.8 MB',
-    printTime: '~30 min',
-  },
-  {
-    id: '5',
-    name: 'Kawaii Bear Decoration',
-    price: 3.99,
-    category: 'decoration',
-    description: 'Petit ours kawaii décoratif',
-    image: 'https://images.unsplash.com/photo-1765507378418-7821c7c059d6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pYXR1cmUlMjBiZWFyJTIwZmlndXJpbmUlMjBjdXRlJTIwY29sbGVjdGlvbnxlbnwxfHx8fDE3NzM0MDQ3NDV8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    details: 'Figurine décorative adorable pour bureau ou étagère. Expression douce et formes arrondies.',
-    fileSize: '4.2 MB',
-    printTime: '~1h 45min',
-  },
-  {
-    id: '6',
-    name: 'Pastel Bunny Keychain',
-    price: 3.29,
-    category: 'keychain',
-    description: 'Porte-clés lapin pastel',
-    image: 'https://images.unsplash.com/photo-1760733672584-475e728f09c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjdXRlJTIwYnVubnklMjB0b3klMjBwYXN0ZWwlMjBjb2xsZWN0aWJsZXxlbnwxfHx8fDE3NzM0MDQ3NDV8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    details: 'Design mignon avec grandes oreilles. Parfait pour personnaliser sacs et trousses.',
-    fileSize: '3.5 MB',
-    printTime: '~1h 20min',
-  },
-  {
-    id: '7',
-    name: 'Iridescent Flower Charm',
-    price: 2.79,
-    category: 'charm',
-    description: 'Fleur délicate effet irisé',
-    image: 'https://images.unsplash.com/photo-1681837163667-2af19d19e413?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzbWFsbCUyMGRlY29yYXRpdmUlMjBvYmplY3QlMjBwYXN0ZWwlMjBtaW5pbWFsfGVufDF8fHx8MTc3MzQwNDc0NXww&ixlib=rb-4.1.0&q=80&w=1080',
-    details: 'Petite fleur aux pétales arrondis. Idéale pour créations DIY.',
-    fileSize: '2.1 MB',
-    printTime: '~40 min',
-  },
-  {
-    id: '8',
-    name: 'Mini Rainbow Art Pop',
-    price: 4.49,
-    category: 'art-toy',
-    description: 'Arc-en-ciel collectible miniature',
-    image: 'https://images.unsplash.com/photo-1757072600329-f38a321f3397?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHwzRCUyMHByaW50JTIwa2V5Y2hhaW4lMjBjdXRlJTIwYWNjZXNzb3J5fGVufDF8fHx8MTc3MzQwNDc0NHww&ixlib=rb-4.1.0&q=80&w=1080',
-    details: 'Design joyeux et coloré. Parfait pour collection ou cadeau.',
-    fileSize: '4.9 MB',
-    printTime: '~2h',
-  },
-];
+// Load the server catalogue before mounting so prices and archived products reflect admin changes.
+export async function loadPublicCatalogue() {
+  try {
+    const response = await fetch("/api/catalog", {
+      signal: AbortSignal.timeout(3000),
+    });
+    if (!response.ok) return;
+    const data = await response.json();
+    if (!Array.isArray(data.products)) return;
+    products = data.products.map((p: Product) => ({
+      ...p,
+      image: images[p.image] ?? p.image,
+    }));
+    for (const product of products) {
+      if (!categories[product.category])
+        categories[product.category] = product.category.replace(/-/g, " ");
+    }
+  } catch {
+    /* Keep the static browsing catalogue during API downtime; checkout is server validated. */
+  }
+}

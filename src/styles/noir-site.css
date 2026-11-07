@@ -1,0 +1,543 @@
+/* Tokens live here; src/styles/system.css applies them as one minimal
+   component layer: white page, black type, hairlines for structure. */
+@import "@fontsource-variable/inter-tight/wght.css";
+@import "@fontsource-variable/geist-mono";
+
+:root,
+.portal-shell {
+  color-scheme: light;
+  /* Minimal: white page, near-black ink, greys for structure. Black is the only
+     action colour; the pink bunny logo is the only colour accent. */
+  --pop: #111111;
+  --pop-hover: #333333;
+  --pop-strong: #111111;
+  --pop-soft: #f2f2f2;
+  --on-pop: #ffffff;
+  --bg: #ffffff;
+  --surface-1: #ffffff;
+  --surface-2: #f5f5f5;
+  --surface-3: #e8e8e8;
+  --line: #e6e6e6;
+  --stage: #f4f4f4;
+  --stage-deep: #ececec;
+  --stage-light: #fafafa;
+  --text: #111111;
+  --text-2: #5c5c5c;
+  --text-3: #8f8f8f;
+  --shadow: #000000;
+  --font-sans: "Inter Tight Variable", "Helvetica Neue", -apple-system,
+    Arial, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, Menlo, monospace;
+  /* Kept as an alias so older rules resolve to the single sans face. */
+  --font-hand: var(--font-sans);
+  --radius: 14px;
+
+  --ink: var(--text);
+  --wine: var(--text);
+  --paper: var(--bg);
+  --muted: var(--text-2);
+  --soft: var(--surface-2);
+  --surface: var(--surface-1);
+  --background: var(--bg);
+  --foreground: var(--text);
+  --card: var(--surface-1);
+  --card-foreground: var(--text);
+  --border: transparent;
+  --input-background: var(--surface-1);
+}
+html,
+body,
+#root {
+  background: var(--bg);
+  color: var(--text);
+}
+body {
+  padding: 0;
+}
+#root {
+  max-width: none;
+  border-radius: 0;
+}
+::selection {
+  background: var(--pop);
+  color: var(--on-pop);
+}
+
+/* Typography: Inter Tight everywhere, Geist Mono for small metadata labels. */
+.portal-shell,
+.portal-shell button,
+.portal-shell input,
+.portal-shell select,
+.portal-shell textarea {
+  font-family: var(--font-sans);
+}
+.portal-shell {
+  background: var(--bg);
+  color: var(--text);
+  color-scheme: light;
+  font-optical-sizing: auto;
+  font-synthesis-weight: none;
+}
+.portal-shell :is(h1, h2, h3, h4, h1 *, h2 *, h3 *),
+.portal-shell .accordion-panel .accordion-label {
+  font-family: var(--font-hand);
+  font-weight: 400;
+  font-style: normal;
+}
+.portal-shell h1 {
+  letter-spacing: 0;
+  line-height: 0.95;
+}
+.portal-shell :is(h2, h3, h4) {
+  letter-spacing: 0;
+}
+.portal-shell .eyebrow,
+.portal-shell .result-count,
+.portal-shell .search-hint,
+.portal-shell .card-format,
+.portal-shell .room-heading,
+.portal-shell .board-index,
+.portal-shell .about-next-top,
+.portal-shell .about-object-index,
+.portal-shell .collection-placeholder-number,
+.portal-shell .discovery-intro .eyebrow,
+.portal-shell .included-files > div,
+.portal-shell .cart-table-heading {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 450;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.portal-shell .eyebrow,
+.portal-shell .result-count,
+.portal-shell .search-hint,
+.portal-shell .room-heading,
+.portal-shell .about-next-top,
+.portal-shell .cart-table-heading {
+  color: var(--text-3);
+}
+
+/* No hairlines anywhere in the storefront. */
+.portal-shell .portal-header,
+.portal-shell .about-next-bottom,
+.portal-shell .about-next-copy > a,
+.portal-shell .about-object-orbit,
+.portal-shell .studio-about-link,
+.portal-shell .studio-orbit,
+.portal-shell .collection-placeholder > a,
+.portal-shell .object-cart,
+.portal-shell .object-copy details,
+.portal-shell .object-angles button,
+.portal-shell .contact-form,
+.portal-shell .discovery-toolbar,
+.portal-shell .discovery-sort,
+.portal-shell .discovery-filters .category-tabs button,
+.portal-shell .catalogue-end,
+.portal-shell .product-title,
+.portal-shell .order-summary,
+.portal-shell .error-message,
+.portal-shell .button,
+.portal-shell .text-link,
+.portal-shell .notice,
+.portal-shell .digital-notice,
+.portal-shell .contact-note,
+.portal-shell .form-success,
+.portal-shell .checkout-summary,
+.portal-shell input,
+.portal-shell textarea,
+.portal-shell select {
+  border: 0;
+}
+
+/* Links and focus */
+.portal-shell a:hover {
+  color: var(--pop);
+}
+.portal-shell .button:hover,
+.portal-shell .object-buy:hover {
+  color: var(--on-pop);
+}
+.portal-shell a:focus-visible,
+.portal-shell button:focus-visible,
+.portal-shell input:focus-visible,
+.portal-shell select:focus-visible,
+.portal-shell textarea:focus-visible {
+  outline: 2px solid var(--pop);
+  outline-offset: 3px;
+}
+.portal-shell .text-link {
+  text-decoration: underline;
+  text-decoration-color: var(--pop);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+.portal-shell .studio-about-link,
+.portal-shell .collection-placeholder > a,
+.portal-shell .about-next-copy > a {
+  background: var(--surface-1);
+  border-radius: 999px;
+  padding: 14px 22px;
+}
+
+/* Pages */
+.portal-shell .page {
+  min-height: calc(100svh - 220px);
+}
+.portal-shell .page h1 {
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.portal-shell .muted,
+.portal-shell .small.muted {
+  color: var(--text-2);
+}
+
+/* Forms: filled fields instead of outlined boxes. */
+.portal-shell input:not([type="checkbox"]):not([type="radio"]),
+.portal-shell textarea,
+.portal-shell select {
+  background: var(--surface-1);
+  color: var(--text);
+  border-radius: 12px;
+  color-scheme: light;
+  transition: background 0.2s;
+}
+.portal-shell input:not([type="checkbox"]):not([type="radio"]):hover,
+.portal-shell textarea:hover,
+.portal-shell select:hover {
+  background: var(--surface-2);
+}
+.portal-shell input::placeholder,
+.portal-shell textarea::placeholder {
+  color: var(--text-3);
+}
+.portal-shell .checkbox-label input {
+  accent-color: var(--pop);
+}
+.portal-shell .discovery-search {
+  background: var(--surface-1);
+  border-radius: 999px;
+  padding: 0 8px 0 20px;
+}
+.portal-shell .discovery-search input,
+.portal-shell .discovery-search input:hover {
+  background: transparent;
+}
+.portal-shell .discovery-search input:focus-visible {
+  outline: 0;
+}
+.portal-shell .discovery-search:focus-within {
+  box-shadow: 0 0 0 2px var(--pop);
+}
+.portal-shell .discovery-sort {
+  padding-left: 0;
+}
+.portal-shell .discovery-sort select {
+  border-radius: 999px;
+  padding: 0 18px;
+}
+
+/* Buttons: accent primary, tonal secondary. */
+.portal-shell .button,
+.portal-shell .object-buy {
+  background: var(--pop);
+  color: var(--on-pop);
+  border-radius: 999px;
+  font-weight: 600;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+.portal-shell .button:hover,
+.portal-shell .object-buy:hover {
+  background: var(--pop-hover);
+  transform: translateY(-1px);
+}
+.portal-shell .button.secondary,
+.portal-shell .object-cart {
+  background: var(--surface-2);
+  color: var(--text);
+  border-radius: 999px;
+}
+.portal-shell .button.secondary:hover,
+.portal-shell .object-cart:hover {
+  background: var(--surface-3);
+  color: var(--text);
+}
+.portal-shell .button:disabled {
+  opacity: 0.45;
+  transform: none;
+}
+.portal-shell .discovery-filters .category-tabs button {
+  background: var(--surface-1);
+  color: var(--text-2);
+  border-radius: 999px;
+  font-weight: 500;
+}
+.portal-shell .discovery-filters .category-tabs button:hover:not([aria-pressed="true"]) {
+  background: var(--surface-2);
+  color: var(--text);
+}
+.portal-shell .discovery-filters .category-tabs button[aria-pressed="true"] {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/* Panels and notices */
+.portal-shell .notice,
+.portal-shell .digital-notice,
+.portal-shell .contact-note,
+.portal-shell .form-success,
+.portal-shell .checkout-summary,
+.portal-shell .order-summary {
+  background: var(--surface-1);
+  color: var(--text-2);
+  border-radius: var(--radius);
+}
+.portal-shell .order-summary {
+  padding: 28px;
+}
+.portal-shell .error-message {
+  background: #fde2e6;
+  color: #a3264f;
+  border-radius: 12px;
+}
+
+/* Product imagery: dark stages, rounded, white objects pop. */
+.portal-shell .object-photo,
+.portal-shell .object-angles button,
+.portal-shell .detail-image,
+.portal-shell .product-image,
+.portal-shell .discovery-card,
+.portal-shell .discovery-card .product-image,
+.portal-shell .board-category {
+  background: var(--surface-1);
+}
+.portal-shell .object-photo,
+.portal-shell .detail-image,
+.portal-shell .product-image,
+.portal-shell .discovery-card,
+.portal-shell .board-category {
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.portal-shell .object-angles button {
+  border-radius: 10px;
+  overflow: hidden;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+.portal-shell .object-angles button:hover,
+.portal-shell .object-angles button[aria-pressed="true"] {
+  opacity: 1;
+}
+.portal-shell .object-angles button[aria-pressed="true"] {
+  box-shadow: 0 0 0 2px var(--pop);
+}
+.portal-shell .board-category:hover {
+  background: var(--surface-2);
+}
+.portal-shell .card-format,
+.portal-shell .discovery-card .image-open {
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 999px;
+}
+.portal-shell .discovery-card .image-open {
+  background: var(--pop);
+  color: var(--on-pop);
+}
+.portal-shell .discovery-card .card-add {
+  background: var(--surface-2);
+  color: var(--text);
+  border-radius: 999px;
+}
+.portal-shell .discovery-card .card-add:hover:not(:disabled) {
+  background: var(--pop);
+  color: var(--on-pop);
+}
+.portal-shell .card-title-line h3 {
+  font-weight: 600;
+  font-stretch: 90%;
+  font-size: 15px;
+}
+.portal-shell .card-price,
+.portal-shell .object-price,
+.portal-shell .summary-line,
+.portal-shell .summary-total {
+  font-variant-numeric: tabular-nums;
+}
+.portal-shell .object-copy h1 {
+  color: var(--text);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.portal-shell .object-price {
+  color: var(--pop);
+  font-family: var(--font-mono);
+  font-size: 18px;
+}
+.portal-shell .object-copy > p:not([class]),
+.portal-shell .object-disclaimer,
+.portal-shell .object-copy details p,
+.portal-shell .object-terms {
+  color: var(--text-2);
+}
+.portal-shell .object-copy details {
+  background: var(--surface-1);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-top: 8px;
+}
+.portal-shell .object-copy details summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Collection room */
+.portal-shell .collection-room {
+  background: var(--bg);
+}
+.portal-shell .room-heading,
+.portal-shell .charm-caption,
+.portal-shell .collection-placeholder p {
+  color: var(--text-2);
+}
+.portal-shell .charm-cords line {
+  stroke: var(--text-3);
+}
+
+/* Legal and information */
+.portal-shell .legal-copy p {
+  color: var(--text-2);
+}
+.portal-shell .legal-copy .notice {
+  padding: 16px;
+  font-size: 12px;
+}
+.portal-shell .information-page h1 {
+  margin: 20px 0 45px;
+}
+.portal-shell .information-page .legal-copy section {
+  margin: 32px 0;
+}
+
+/* Admin back office follows the same dark palette. */
+body .admin-page {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+}
+body .admin-page input:not([type="checkbox"]),
+body .admin-page textarea,
+body .admin-page select {
+  background: var(--surface-1);
+  color: var(--text);
+  border-color: transparent;
+  border-radius: 10px;
+}
+body .admin-page input:disabled {
+  background: var(--surface-2);
+}
+body .admin-page small,
+body .admin-caption,
+body .admin-kicker {
+  color: var(--text-2);
+}
+body .admin-page .admin-button,
+body .admin-page .admin-tabs button[aria-current="page"] {
+  background: var(--pop);
+  color: var(--on-pop);
+  border-color: var(--pop);
+}
+body .admin-page .admin-metrics article,
+body .admin-page .admin-setup code,
+body .admin-page .admin-product-row.is-active,
+body .admin-page .admin-product-row:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+body .admin-page .admin-product-form,
+body .admin-page .admin-order-detail,
+body .admin-page .admin-login {
+  background: var(--surface-1);
+  border-color: transparent;
+}
+body .admin-page td,
+body .admin-page th {
+  border-color: var(--surface-2);
+}
+
+@media (max-width: 700px) {
+  .portal-shell .page {
+    padding-top: 24px;
+  }
+}
+
+/* Explore board: dark tiles, photos and renders shown as-is (no multiply). */
+.portal-shell .discovery-card .product-image img {
+  mix-blend-mode: normal;
+}
+.portal-shell .discovery-card .card-title-line h3,
+.portal-shell .discovery-card .card-price {
+  color: var(--text);
+}
+.portal-shell .discovery-feed {
+  gap: 8px;
+}
+.portal-shell .collection-grid > .discovery-card:nth-child(-n + 2) .product-image,
+.portal-shell .collection-grid > .discovery-card.ratio-1:nth-child(-n + 2) .product-image,
+.portal-shell .collection-grid > .discovery-card.ratio-2:nth-child(-n + 2) .product-image {
+  background: var(--surface-1);
+}
+.portal-shell .discovery-feed .discovery-card .product-image {
+  background: var(--surface-1);
+}
+
+/* Form fields: beat the per-form outlined rules from custom.css. */
+.portal-shell .contact-form input,
+.portal-shell .contact-form select,
+.portal-shell .contact-form textarea,
+.portal-shell .checkout-form input:not([type="checkbox"]),
+.portal-shell .checkout-form select,
+.portal-shell .checkout-form textarea {
+  border: 0;
+  background: var(--surface-1);
+  color: var(--text);
+  border-radius: 12px;
+}
+.portal-shell .contact-form input:hover,
+.portal-shell .contact-form select:hover,
+.portal-shell .contact-form textarea:hover,
+.portal-shell .checkout-form input:not([type="checkbox"]):hover {
+  background: var(--surface-2);
+}
+
+/* FAQ: each question is its own tonal card. */
+.portal-shell .faq-item {
+  background: var(--surface-1);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 8px;
+}
+.portal-shell .faq-item[open] {
+  background: var(--surface-2);
+}
+.portal-shell .faq-item summary {
+  font-weight: 600;
+}
+@media (max-width: 700px) {
+  .portal-shell .discovery-page {
+    padding-top: 16px;
+  }
+  .portal-shell .discovery-sort select {
+    max-width: none;
+  }
+}
+
+/* STL renders carry their own pastel pink; only photos stay monochrome. */
+.portal-shell :is(.cart-row, .mini-product, .product-image, .detail-image)
+  img[src^="/previews/"] {
+  filter: none;
+}

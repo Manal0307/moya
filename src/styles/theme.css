@@ -2,29 +2,36 @@
 
 :root {
   --font-size: 16px;
-  --background: #ffffff;
-  --foreground: #190933;
-  --card: #ffffff;
-  --card-foreground: #190933;
-  --popover: #ffffff;
-  --popover-foreground: #190933;
+  --background: #fffaf8;
+  --foreground: #1d1230;
+  --card: #fffdfb;
+  --card-foreground: #1d1230;
+  --popover: #fffdfb;
+  --popover-foreground: #1d1230;
   --primary: #190933;
   --primary-foreground: #ffffff;
-  --secondary: #f5f3f0;
-  --secondary-foreground: #190933;
-  --muted: #f5f3f0;
-  --muted-foreground: #8a8290;
-  --accent: #f5f3f0;
-  --accent-foreground: #190933;
+  --secondary: #f6ebe9;
+  --secondary-foreground: #1d1230;
+  --muted: #f8efef;
+  --muted-foreground: #7f7281;
+  --accent: #f7e8eb;
+  --accent-foreground: #1d1230;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: #e8e4e0;
+  --border: #edd9df;
   --input: transparent;
-  --input-background: #f5f3f0;
+  --input-background: #fbf6f5;
   --switch-background: #e5e7eb;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: #BBBBFF;
+  --ring: #efc8d5;
+  --brand-ink: #1d1230;
+  --brand-plum: #7a5b83;
+  --brand-lilac: #e2d5e8;
+  --brand-rose: #e7c1cb;
+  --brand-peach: #f2d3c6;
+  --brand-cream: #fff7f3;
+  --brand-mist: #f7eef1;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -126,7 +133,9 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+    background: #fff8f5;
+    min-height: 100vh;
   }
 
   html {
@@ -137,18 +146,24 @@
     font-size: var(--text-2xl);
     font-weight: var(--font-weight-medium);
     line-height: 1.5;
+    font-family: 'Syne', sans-serif;
+    letter-spacing: -0.04em;
   }
 
   h2 {
     font-size: var(--text-xl);
     font-weight: var(--font-weight-medium);
     line-height: 1.5;
+    font-family: 'Syne', sans-serif;
+    letter-spacing: -0.03em;
   }
 
   h3 {
     font-size: var(--text-lg);
     font-weight: var(--font-weight-medium);
     line-height: 1.5;
+    font-family: 'Syne', sans-serif;
+    letter-spacing: -0.02em;
   }
 
   h4 {

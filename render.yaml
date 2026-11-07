@@ -1,0 +1,45 @@
+# Render Blueprint for Tokki Pocket (https://render.com/docs/blueprint-spec).
+# One web service serves both the site (built into dist/) and the API.
+# The persistent disk keeps the SQLite store and the private STL files across
+# deploys; everything outside /var/data is wiped on each deploy.
+services:
+  - type: web
+    name: tokki-pocket
+    runtime: node
+    region: frankfurt # data stays in the EU
+    plan: starter # persistent disks need a paid instance
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/catalog
+    disk:
+      name: tokki-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: HOST
+        value: 0.0.0.0 # listen for traffic from outside the container
+      - key: TRUST_PROXY
+        value: "true" # rate-limit per visitor, not per Render proxy
+      - key: DATA_DIR
+        value: /var/data/db
+      - key: FILES_DIR
+        value: /var/data/private-files
+      - key: APP_ORIGIN
+        value: https://tokkipocket.com
+      # Payments stay closed until the live Stripe keys and webhook are set.
+      - key: COMMERCE_ENABLED
+        value: "false"
+      - key: STRIPE_MODE
+        value: live
+      - key: STRIPE_SECRET_KEY
+        sync: false # entered by hand in the Render dashboard, never committed
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: EMAIL_SEND_ENABLED
+        value: "false"
+      - key: RESEND_API_KEY
+        sync: false
+      - key: EMAIL_FROM
+        value: Tokki Pocket <orders@tokkipocket.com>

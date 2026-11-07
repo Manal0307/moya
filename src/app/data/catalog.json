@@ -1,0 +1,98 @@
+[
+  {
+    "id": "1",
+    "name": "Dreamy Star Charm",
+    "category": "charm",
+    "description": "Soft star charm with an iridescent finish",
+    "details": "Optimized STL file for 3D printing. Ideal for making your own jewelry or accessories, with a polished finish recommended for the best result.",
+    "fileSize": "2.4 MB",
+    "printTime": "~45 min",
+    "price": 2.99,
+    "image": "charmBunny",
+    "featured": true
+  },
+  {
+    "id": "2",
+    "name": "Pearl Cloud Keychain",
+    "category": "keychain",
+    "description": "Soft pearly cloud keychain",
+    "details": "Minimal design with a built-in ring hole. Best printed in pearl PLA or glossy filament for a soft premium finish.",
+    "fileSize": "3.1 MB",
+    "printTime": "~1h 10min",
+    "price": 3.49,
+    "image": "charmCat",
+    "featured": true
+  },
+  {
+    "id": "3",
+    "name": "Glossy Heart Pop",
+    "category": "art-toy",
+    "description": "Mini glossy heart art toy",
+    "details": "Collectible art toy with a rounded cute silhouette. Great for decorating your desk or starting a playful mini collection. No supports needed.",
+    "fileSize": "5.8 MB",
+    "printTime": "~2h 30min",
+    "price": 4.99,
+    "image": "charmKitty",
+    "featured": true
+  },
+  {
+    "id": "4",
+    "name": "Silver Moon Charm",
+    "category": "charm",
+    "description": "Small silver crescent moon charm",
+    "details": "Delicate charm designed for earrings, bracelets, or small accessories. Clean and elegant printable shape.",
+    "fileSize": "1.8 MB",
+    "printTime": "~30 min",
+    "price": 2.49,
+    "image": "charmSilver",
+    "featured": false
+  },
+  {
+    "id": "5",
+    "name": "Kawaii Bear Decoration",
+    "category": "decoration",
+    "description": "Cute decorative bear figure",
+    "details": "Adorable decorative figure for a desk or shelf, with soft expression and rounded forms.",
+    "fileSize": "4.2 MB",
+    "printTime": "~1h 45min",
+    "price": 3.99,
+    "image": "https://images.unsplash.com/photo-1765507378418-7821c7c059d6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pYXR1cmUlMjBiZWFyJTIwZmlndXJpbmUlMjBjdXRlJTIwY29sbGVjdGlvbnxlbnwxfHx8fDE3NzM0MDQ3NDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "featured": false
+  },
+  {
+    "id": "6",
+    "name": "Pastel Bunny Keychain",
+    "category": "keychain",
+    "description": "Pastel bunny keychain",
+    "details": "Cute bunny design with oversized ears, perfect for customizing bags, pencil cases, and accessories.",
+    "fileSize": "3.5 MB",
+    "printTime": "~1h 20min",
+    "price": 3.29,
+    "image": "https://images.unsplash.com/photo-1760733672584-475e728f09c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjdXRlJTIwYnVubnklMjB0b3klMjBwYXN0ZWwlMjBjb2xsZWN0aWJsZXxlbnwxfHx8fDE3NzM0MDQ3NDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "featured": false
+  },
+  {
+    "id": "7",
+    "name": "Iridescent Flower Charm",
+    "category": "charm",
+    "description": "Delicate iridescent flower charm",
+    "details": "Small flower charm with rounded petals, ideal for DIY accessories and cute printed collections.",
+    "fileSize": "2.1 MB",
+    "printTime": "~40 min",
+    "price": 2.79,
+    "image": "https://images.unsplash.com/photo-1681837163667-2af19d19e413?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzbWFsbCUyMGRlY29yYXRpdmUlMjBvYmplY3QlMjBwYXN0ZWwlMjBtaW5pbWFsfGVufDF8fHx8MTc3MzQwNDc0NXww&ixlib=rb-4.1.0&q=80&w=1080",
+    "featured": false
+  },
+  {
+    "id": "8",
+    "name": "Mini Rainbow Art Pop",
+    "category": "art-toy",
+    "description": "Mini collectible rainbow art toy",
+    "details": "Playful colorful design, perfect for a gift, a desk display, or a cheerful printed mini collection.",
+    "fileSize": "4.9 MB",
+    "printTime": "~2h",
+    "price": 4.49,
+    "image": "https://images.unsplash.com/photo-1757072600329-f38a321f3397?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHwzRCUyMHByaW50JTIwa2V5Y2hhaW4lMjBjdXRlJTIwYWNjZXNzb3J5fGVufDF8fHx8MTc3MzQwNDc0NHww&ixlib=rb-4.1.0&q=80&w=1080",
+    "featured": false
+  }
+]

@@ -1,0 +1,53 @@
+/* Loading screen: the bunny with the real loading percentage under it.
+   Logic lives in OpeningIntro.tsx and src/app/preload.ts. */
+.opening-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  background: #ffffff;
+  color: #111111;
+  cursor: pointer;
+  will-change: transform;
+}
+.opening-center {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+}
+.opening-bunny {
+  display: block;
+  width: 88px;
+  height: auto;
+  user-select: none;
+  /* A small hop in place while loading. */
+  transform-origin: 50% 100%;
+  animation: bunny-hop 0.9s cubic-bezier(0.3, 0, 0.3, 1) infinite;
+}
+.opening-percent {
+  min-width: 4ch;
+  text-align: center;
+  font-family: "Inter Tight Variable", "Helvetica Neue", sans-serif;
+  font-size: 15px;
+  font-weight: 450;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+@keyframes bunny-hop {
+  0%,
+  100% {
+    transform: translateY(0) scale(1.04, 0.94);
+  }
+  45% {
+    transform: translateY(-14px) scale(0.97, 1.04);
+  }
+  80% {
+    transform: translateY(0) scale(1, 1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .opening-bunny {
+    animation: none;
+  }
+}

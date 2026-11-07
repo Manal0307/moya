@@ -1,0 +1,442 @@
+.admin-page {
+  max-width: 1440px;
+  margin: auto;
+  padding: 24px 32px 64px;
+  color: #171717;
+  background: #f5f5f2;
+  min-height: 100vh;
+  font:
+    15px Arial,
+    Helvetica,
+    sans-serif;
+}
+.admin-page * {
+  box-sizing: border-box;
+}
+.admin-page h1 {
+  font-size: clamp(32px, 4vw, 52px);
+  letter-spacing: -0.055em;
+  margin: 8px 0 0;
+}
+.admin-page h2 {
+  font-size: 23px;
+  letter-spacing: -0.035em;
+}
+.admin-page p {
+  line-height: 1.55;
+}
+.admin-page button {
+  font: inherit;
+}
+.admin-page label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+}
+.admin-page input:not([type="checkbox"]),
+.admin-page select,
+.admin-page textarea {
+  background: #fff;
+  color: #171717;
+  border: 1px solid #cececa;
+  border-radius: 0;
+  padding: 12px;
+  font: inherit;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+}
+.admin-page input:disabled {
+  background: #e8e8e4;
+}
+.admin-page textarea {
+  resize: vertical;
+}
+.admin-page small,
+.admin-caption {
+  font-size: 12px;
+  color: #595955;
+  line-height: 1.5;
+}
+.admin-wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 23px;
+  letter-spacing: -0.045em;
+}
+.admin-kicker {
+  display: block;
+  font: 11px monospace;
+  color: #595955;
+  letter-spacing: 0.06em;
+}
+.admin-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 12px 18px;
+  border: 1px solid #171717;
+  background: #171717;
+  color: white;
+  border-radius: 0;
+  font-size: 14px !important;
+}
+.admin-button:hover:not(:disabled) {
+  background: #383838;
+  color: white;
+}
+.admin-secondary {
+  background: transparent;
+  color: #171717;
+  border-color: #cececa;
+}
+.admin-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-size: 13px;
+}
+.admin-login {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+.admin-login-panel {
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+}
+.admin-login-panel > p {
+  margin: 16px 0 28px;
+}
+.admin-login-panel form {
+  display: grid;
+  gap: 20px;
+}
+.admin-setup {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #d4d4ce;
+  font-size: 13px;
+}
+.admin-setup summary {
+  cursor: pointer;
+  min-height: 44px;
+}
+.admin-setup code {
+  display: block;
+  background: #e8e8e4;
+  padding: 12px;
+  overflow-wrap: anywhere;
+  margin: 16px 0;
+}
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #d4d4ce;
+}
+.admin-header > div:last-child {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+.admin-header .admin-kicker {
+  margin-top: 8px;
+}
+.admin-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 20px 0;
+}
+.admin-tabs button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 16px;
+  font-size: 14px;
+}
+.admin-tabs [aria-current="page"] {
+  color: white;
+  background: #171717;
+}
+.admin-main {
+  padding-top: 20px;
+}
+.admin-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+.admin-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.admin-metrics article {
+  background: #e8e8e4;
+  padding: 24px;
+}
+.admin-metrics span {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+.admin-metrics strong {
+  font-size: clamp(24px, 3vw, 38px);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+}
+.admin-summary {
+  margin-top: 40px;
+  border-top: 1px solid #d4d4ce;
+  padding-top: 28px;
+}
+.admin-summary p {
+  margin: 16px 0 20px;
+}
+.admin-alert,
+.admin-notice {
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  border: 1px solid #a34030;
+  background: #fff4ef;
+  color: #762f24;
+  overflow-wrap: anywhere;
+}
+.admin-notice {
+  border-color: #8c9c86;
+  background: #f0f5ed;
+  color: #34482c;
+}
+.admin-editor-layout {
+  display: grid;
+  grid-template-columns: minmax(250px, 0.8fr) minmax(0, 1.2fr);
+  gap: 32px;
+  align-items: start;
+}
+.admin-product-list {
+  border-top: 1px solid #d4d4ce;
+}
+.admin-product-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 16px;
+  align-items: center;
+  text-align: left;
+  padding: 16px 8px;
+  border-bottom: 1px solid #d4d4ce;
+  min-height: 76px;
+}
+.admin-product-row strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+}
+.admin-product-row small {
+  display: block;
+  margin-top: 5px;
+}
+.admin-product-row > span {
+  font-size: 13px;
+}
+.admin-product-row.is-active,
+.admin-product-row:hover {
+  background: #e8e8e4;
+}
+.admin-badge {
+  font-size: 11px !important;
+  border: 1px solid #bbb;
+  padding: 4px 6px;
+}
+.admin-product-form {
+  background: white;
+  padding: 24px;
+  border: 1px solid #d4d4ce;
+  display: grid;
+  gap: 20px;
+}
+.admin-form-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.admin-form-title button {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+}
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.admin-members {
+  border: 1px solid #d4d4ce;
+  padding: 16px;
+  min-width: 0;
+}
+.admin-members legend {
+  font-size: 14px;
+  padding: 0 6px;
+}
+.admin-page .admin-members label,
+.admin-page .admin-check {
+  flex-direction: row;
+  align-items: center;
+  min-height: 44px;
+  font-size: 13px;
+}
+.admin-page input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+}
+.admin-upload {
+  padding: 16px;
+  border: 1px dashed #aaa;
+}
+.admin-upload > input {
+  font-size: 13px !important;
+}
+.admin-search {
+  display: flex;
+  gap: 12px;
+  max-width: 640px;
+  margin-bottom: 24px;
+}
+.admin-table-wrap {
+  overflow-x: auto;
+}
+.admin-page table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.admin-page th {
+  color: #595955;
+  font-weight: 400;
+}
+.admin-page th,
+.admin-page td {
+  padding: 12px;
+  border-bottom: 1px solid #d4d4ce;
+}
+.admin-order-detail {
+  margin-top: 32px;
+  max-width: 720px;
+  padding: 24px;
+  background: white;
+  border: 1px solid #d4d4ce;
+}
+.admin-order-id {
+  font: 12px monospace;
+  overflow-wrap: anywhere;
+  margin: 16px 0;
+}
+.admin-order-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0;
+  border-top: 1px solid #d4d4ce;
+  margin-top: 16px;
+}
+.admin-order-item small {
+  display: block;
+  margin-top: 8px;
+}
+.admin-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+@media (max-width: 900px) {
+  .admin-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .admin-editor-layout {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .admin-page {
+    padding: 20px 16px 48px;
+  }
+  .admin-header {
+    align-items: start;
+  }
+  .admin-header > div:last-child {
+    flex-direction: column;
+    gap: 4px;
+    align-items: end;
+  }
+  .admin-wordmark {
+    font-size: 20px;
+  }
+  .admin-tabs {
+    gap: 2px;
+    overflow-x: auto;
+  }
+  .admin-tabs button {
+    white-space: nowrap;
+    padding: 10px;
+    font-size: 12px;
+  }
+  .admin-heading {
+    flex-direction: column;
+    align-items: start;
+  }
+  .admin-metrics article {
+    padding: 16px;
+  }
+  .admin-product-form {
+    padding: 16px;
+  }
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .admin-product-row {
+    grid-template-columns: 1fr auto;
+  }
+  .admin-product-row .admin-badge {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+  .admin-search {
+    flex-direction: column;
+  }
+}
+.admin-message-body {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.7;
+  margin: 24px 0;
+}
+.admin-message-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  margin-top: 24px;
+}

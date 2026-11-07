@@ -1,0 +1,418 @@
+/* Home layout: quiet nav, centred hero, the five-charm accordion
+   and a dotted footer. */
+
+/* Navigation: a floating pink glass pill, a little denser once the page
+   scrolls under it. */
+.lab-nav {
+  position: sticky;
+  top: 12px;
+  z-index: 40;
+  height: 60px;
+  margin: 12px 12px 0;
+  padding: 0 10px 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-radius: 999px;
+  border: 1px solid #ffffffb0;
+  background: color-mix(in srgb, var(--pop) 38%, transparent);
+  box-shadow:
+    0 8px 24px color-mix(in srgb, var(--shadow) 12%, transparent),
+    inset 0 1px 0 #ffffffb0;
+  -webkit-backdrop-filter: blur(18px) saturate(1.6);
+  backdrop-filter: blur(18px) saturate(1.6);
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    backdrop-filter 0.35s ease;
+}
+.lab-nav.is-scrolled {
+  background: color-mix(in srgb, var(--pop) 55%, transparent);
+  box-shadow:
+    0 12px 32px color-mix(in srgb, var(--shadow) 22%, transparent),
+    inset 0 1px 0 #ffffffb0;
+}
+.portal-shell .lab-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-hand);
+  font-weight: 400;
+  font-size: 30px;
+  letter-spacing: 0;
+  line-height: 1;
+  color: var(--text);
+}
+.lab-nav .lab-logo {
+  margin-right: 28px;
+}
+.lab-logo-mark {
+  width: 44px;
+  height: auto;
+  filter: saturate(1.9) brightness(0.9) drop-shadow(0 0 1.5px #fff)
+    drop-shadow(0 2px 4px #b0577f40);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.lab-logo:hover .lab-logo-mark {
+  transform: rotate(-8deg) translateY(-2px);
+}
+.lab-links {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 999px;
+  background: color-mix(in srgb, #ffffff 60%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, #ffffff 85%, transparent);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+.portal-shell .lab-links a {
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-2);
+  transition:
+    color 0.2s,
+    background 0.2s;
+}
+.portal-shell .lab-links a:hover {
+  color: var(--text);
+  background: color-mix(in srgb, #ffffff 70%, transparent);
+}
+.portal-shell .lab-links a.active {
+  color: #fff;
+  background: var(--pop-strong);
+}
+.lab-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.portal-shell .lab-bag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 8px 0 16px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--shadow) 14%, transparent);
+  transition: transform 0.2s, background 0.2s;
+}
+.portal-shell .lab-bag:hover {
+  background: #fff;
+  color: var(--text);
+  transform: translateY(-1px);
+}
+.lab-bag-count {
+  display: grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--pop-strong);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.portal-shell .lab-menu-toggle {
+  display: none;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--surface-1);
+  color: var(--text);
+}
+.lab-sheet {
+  position: absolute;
+  top: 70px;
+  left: 12px;
+  right: 12px;
+  display: grid;
+  padding: 8px;
+  border-radius: 24px;
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  border: 1px solid #ffffffb0;
+  box-shadow: 0 24px 60px #b0577f2e;
+  -webkit-backdrop-filter: blur(18px) saturate(1.6);
+  backdrop-filter: blur(18px) saturate(1.6);
+}
+.portal-shell .lab-sheet a {
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+}
+.portal-shell .lab-sheet a:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+/* Hero */
+.lab-home {
+  padding: 0 20px;
+}
+.lab-hero {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 104px 0 72px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.portal-shell .lab-hero h1 {
+  font-family: var(--font-hand);
+  font-size: clamp(56px, 7.5vw, 96px);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.05;
+  margin: 0;
+}
+.lab-hero-copy {
+  margin: 36px 0 32px;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: 500px;
+}
+.lab-hero-copy strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Collection accordion: five charms on blush stages. */
+.lab-accordion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+.portal-shell .home-objects-heading {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 450;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.portal-shell .accordion-panel {
+  border: 0;
+  border-radius: 18px;
+  background: var(--surface-1);
+  box-shadow: none;
+}
+.portal-shell .accordion-panel.is-open {
+  box-shadow: 0 30px 60px #b0577f2e;
+}
+.portal-shell .accordion-panel .accordion-art,
+.portal-shell .accordion-panel.accordion-tone-1 .accordion-art,
+.portal-shell .accordion-panel.accordion-tone-2 .accordion-art,
+.portal-shell .accordion-panel.accordion-tone-3 .accordion-art,
+.portal-shell .accordion-panel.accordion-tone-4 .accordion-art {
+  background: radial-gradient(
+    ellipse at 50% 40%,
+    #ffffff 0%,
+    #fff3f7 55%,
+    #fde6ef 100%
+  );
+}
+.portal-shell .accordion-panel.is-open .accordion-art {
+  background: radial-gradient(
+    ellipse at 50% 40%,
+    #ffffff 0%,
+    #fff0f5 50%,
+    #fbdbe8 100%
+  );
+}
+.portal-shell .accordion-art:after {
+  background: none;
+}
+.portal-shell .accordion-art img {
+  filter: drop-shadow(0 20px 16px #b0577f40);
+}
+.portal-shell .accordion-panel.is-open img {
+  filter: drop-shadow(0 24px 20px #b0577f4d);
+}
+.portal-shell .accordion-panel .accordion-number {
+  font-family: var(--font-mono);
+  color: var(--text-3);
+}
+.portal-shell .accordion-panel.is-open .accordion-number {
+  color: var(--pop);
+}
+.portal-shell .accordion-rest-name {
+  color: var(--text-2);
+  font-weight: 500;
+  font-size: 13px;
+}
+.portal-shell .accordion-panel .accordion-label {
+  color: var(--text);
+  font-weight: 400;
+  font-size: 32px;
+  letter-spacing: 0;
+}
+.portal-shell .accordion-panel .accordion-product-name small {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-stretch: 100%;
+  font-weight: 450;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+.portal-shell .accordion-label > svg {
+  border: 0;
+  background: var(--pop);
+  color: var(--on-pop);
+  transition: transform 0.25s;
+}
+.portal-shell .accordion-panel:hover .accordion-label > svg {
+  transform: rotate(45deg);
+}
+
+/* Footer */
+.lab-footer {
+  margin-top: 140px;
+  padding: 0 20px;
+}
+.lab-footer-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+.lab-footer-brand p {
+  max-width: 280px;
+  margin-top: 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+.lab-footer-cols {
+  display: flex;
+  gap: 64px;
+}
+.lab-footer-cols > div {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+.lab-footer-cols p {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.portal-shell .lab-footer-cols a {
+  font-size: 14px;
+  color: var(--text-2);
+}
+.portal-shell .lab-footer-cols a:hover {
+  color: var(--pop);
+}
+/* Halftone hills: a dot grid revealed through two soft mounds. */
+.lab-dots {
+  height: 220px;
+  margin: 48px -20px 0;
+  background-image: radial-gradient(
+    circle,
+    var(--text-3) 1.5px,
+    transparent 1.9px
+  );
+  background-size: 11px 11px;
+  -webkit-mask-image:
+    radial-gradient(ellipse 34% 95% at 46% 100%, #000 25%, transparent 72%),
+    radial-gradient(ellipse 22% 60% at 78% 100%, #000 20%, transparent 72%),
+    radial-gradient(ellipse 20% 45% at 14% 100%, #000 15%, transparent 72%);
+  mask-image:
+    radial-gradient(ellipse 34% 95% at 46% 100%, #000 25%, transparent 72%),
+    radial-gradient(ellipse 22% 60% at 78% 100%, #000 20%, transparent 72%),
+    radial-gradient(ellipse 20% 45% at 14% 100%, #000 15%, transparent 72%);
+  opacity: 0.9;
+}
+.lab-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 18px 0 24px;
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+/* The nav now sits in the flow, so pages no longer clear a floating pill on mobile. */
+@media (max-width: 700px) {
+  .portal-shell .object-detail,
+  .portal-shell .collection-room {
+    padding-top: 24px;
+  }
+}
+
+@media (max-width: 900px) {
+  .portal-shell .lab-links {
+    display: none;
+  }
+  .lab-nav .lab-logo {
+    margin-right: 0;
+  }
+  .portal-shell .lab-menu-toggle {
+    display: grid;
+  }
+}
+@media (max-width: 600px) {
+  .lab-nav {
+    margin: 8px 8px 0;
+    top: 8px;
+    padding: 0 8px 0 12px;
+    gap: 10px;
+  }
+  .lab-bag-label {
+    display: none;
+  }
+  .portal-shell .lab-logo {
+    font-size: 24px;
+  }
+  .lab-logo-mark {
+    width: 36px;
+  }
+  .portal-shell .lab-bag {
+    padding: 0 7px;
+  }
+  .lab-home,
+  .lab-footer {
+    padding: 0 14px;
+  }
+  .lab-hero {
+    padding: 56px 0 48px;
+  }
+  .portal-shell .accordion-panel {
+    border-radius: 10px;
+  }
+  .portal-shell .accordion-panel .accordion-label {
+    font-size: 20px;
+  }
+  .portal-shell .accordion-rest-name {
+    font-size: 10px;
+  }
+  .lab-footer-cols {
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .lab-dots {
+    margin: 32px -14px 0;
+    height: 150px;
+  }
+}
+
