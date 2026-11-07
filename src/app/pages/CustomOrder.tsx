@@ -11,20 +11,16 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 // Each subject comes with one line of guidance shown under the choices.
 const subjects = [
   {
-    label: "Custom digital model",
-    hint: "Describe the object, its size and how you’d like to use it.",
+    label: "Custom order",
+    hint: "Describe the piece you have in mind, its size and how you’d like to use it.",
   },
   {
-    label: "Model question",
-    hint: "Name the model and tell us what you’d like to know.",
-  },
-  {
-    label: "Order help",
+    label: "Help with my order",
     hint: "Include your order reference so it can be found quickly.",
   },
   {
     label: "Other question",
-    hint: "Anything else, we read every message.",
+    hint: "Anything about a model, a file or printing: we read every message.",
   },
 ];
 
